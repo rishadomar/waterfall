@@ -1,0 +1,25 @@
+{
+    "title": "Walk to a waterfall",
+    "mainImage": "",
+    "pageTurnerAudio": "",
+    "pages": [
+        {
+            "page": 1,
+            "text": "The path to the waterfall is steep",
+            "image": "assets/pages/steps.jpg",
+            "audio": "assets/pages/1.mp3"
+        },
+        {
+            "page": 2,
+            "text": "See the mushroom growing on the moiset forest floor",
+            "image": "assets/pages/steps.jpg",
+            "audio": "assets/pages/2.mp3"
+        },
+        {
+            "page": 3,
+            "text": "Down, down, down we go",
+            "image": "assets/pages/steps.jpg",
+            "audio": "assets/pages/3.mp3"
+        }
+    ]
+}
