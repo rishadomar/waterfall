@@ -3,46 +3,61 @@ import { StyleSheet, Text, View } from 'react-native';
 import CircleButton from './components/CircleButton';
 import IconButton from './components/IconButton';
 import ImageViewer from './components/ImageViewer';
-import story from './assets/story.json';
-import { useState } from 'react';
-
-const MainImage = require('./assets/images/Forest.jpg');
+import { Story } from './story';
+import { useState} from 'react';
+import { Audio } from 'expo-av';
 
 export default function App() {
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
     const onPreviousPage = () => {
-        if (currentPage === 1) {
+        if (currentPageNumber === 1) {
             return;
         }
-        setCurrentPage((currentPage) => --currentPage);
+        setCurrentPageNumber((currentPage) => --currentPage);
     };
 
     const onNextPage = () => {
-        if (currentPage === story.pages.length) {
+        if (currentPageNumber === Story.pages.length) {
             return;
         }
-        setCurrentPage((currentPage) => ++currentPage);
+        setCurrentPageNumber((currentPage) => ++currentPage);
     };
 
-    const onPlayAudio = () => {};
+    const onPlay = async () => {
+        try {
+            const { sound: soundObject, status } = await Audio.Sound.createAsync(
+                Story.pages[currentPageNumber - 1].audio,
+                {
+                    shouldPlay: true
+                }
+            );
+            // Your sound is playing!
+            console.log('Audio playing');
+        } catch (error) {
+            // An error occurred!
+            console.log('Error playing');
+        }
+    };
 
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 24, color: '#ffd33d' }}>{'Hello'}</Text>
             <View style={styles.imageContainer}>
-                <ImageViewer imageSource={MainImage} />
+                <ImageViewer imageSource={Story.pages[currentPageNumber - 1].image} />
             </View>
             <View style={styles.optionsContainer}>
                 <View style={{ flexDirection: 'column', alignItems: 'center' }}>
                     <View style={styles.optionsRow}>
-                        {currentPage > 1 && <IconButton icon='arrow-back' label='Back' onPress={onPreviousPage} />}
-                        <CircleButton onPress={onPlayAudio} />
-                        {currentPage < story.pages.length && (
+                        {currentPageNumber > 1 && (
+                            <IconButton icon='arrow-back' label='Back' onPress={onPreviousPage} />
+                        )}
+                        <CircleButton onPress={onPlay} />
+                        {currentPageNumber < Story.pages.length && (
                             <IconButton icon='forward' label='Next' onPress={onNextPage} />
                         )}
                     </View>
-                    <Text style={{ color: 'white', marginTop: 15 }}>Page: {currentPage}</Text>
+                    <Text style={{ color: 'white', marginTop: 15 }}>Page: {currentPageNumber}</Text>
                 </View>
             </View>
             <StatusBar style='auto' />
