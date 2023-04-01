@@ -33,7 +33,6 @@ export default function App() {
                 }
             );
             // Your sound is playing!
-            console.log('Audio playing');
         } catch (error) {
             // An error occurred!
             console.log('Error playing');
@@ -44,7 +43,7 @@ export default function App() {
         <View style={styles.container}>
             <Text style={{ fontSize: 24, color: '#ffd33d' }}>{'Hello'}</Text>
             <View style={styles.imageContainer}>
-                <ImageViewer imageSource={Story.pages[currentPageNumber - 1].image} />
+                <ImageViewer page={Story.pages[currentPageNumber - 1]} />
             </View>
             <View style={styles.optionsContainer}>
                 <View style={{ flexDirection: 'column', alignItems: 'center' }}>
