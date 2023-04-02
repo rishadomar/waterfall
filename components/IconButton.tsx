@@ -7,12 +7,13 @@ interface IconButtonProps extends PropsWithChildren<any> {
     icon: any;
     onPress: any;
     label?: string;
+    size?: number;
 }
 
-const IconButton: React.FunctionComponent<IconButtonProps> = ({ icon, label, onPress }) => {
+const IconButton: React.FunctionComponent<IconButtonProps> = ({ icon, label, onPress, size = 80 }) => {
     return (
         <Pressable style={styles.iconButton} onPress={onPress}>
-            <MaterialCommunityIcons name={icon} size={80} color='white' />
+            <MaterialCommunityIcons name={icon} size={size} color='white' />
             {label && <Text style={styles.iconButtonLabel}>{label}</Text>}
         </Pressable>
     );

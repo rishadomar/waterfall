@@ -1,15 +1,14 @@
-import { Audio, AVPlaybackStatus } from 'expo-av';
-import { useEffect, useState } from 'react';
-import { StyleSheet, Image, Dimensions, View, Text, ImageBackground, Pressable } from 'react-native';
-import { PageType, StoryType } from '../story';
-import IconButton from './IconButton';
+import { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { PageType, Tweet } from '../story';
 import Page from './Page';
 
 type PagesProps = {
     pages: PageType[];
+    availableTweets: Tweet[];
 };
 
-const Pages: React.FunctionComponent<PagesProps> = ({ pages }) => {
+const Pages: React.FunctionComponent<PagesProps> = ({ pages, availableTweets }) => {
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
     const onPreviousPage = () => {
@@ -36,6 +35,7 @@ const Pages: React.FunctionComponent<PagesProps> = ({ pages }) => {
             onNext={currentPageNumber < pages.length ? onNextPage : null}
             onPrevious={currentPageNumber > 1 ? onPreviousPage : null}
             onReturnToStart={currentPageNumber === pages.length ? onReturnToStart : null}
+            availableTweets={availableTweets}
         />
     );
 };

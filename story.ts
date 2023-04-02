@@ -6,10 +6,17 @@ export interface PageType {
     audio: any;
 }
 
+export interface Tweet {
+    id: number;
+    image: ImageSourcePropType;
+    audio: any;
+}
+
 export interface StoryType {
     title: string;
     mainImage: ImageSourcePropType | null;
     pageTurnerAudio: any;
+    availableTweets: Tweet[];
     pages: PageType[];
 }
 
@@ -17,6 +24,18 @@ export const Story: StoryType = {
     title: 'Walk to a waterfall',
     mainImage: null,
     pageTurnerAudio: require('./assets/pages/pageTurner.wav'),
+    availableTweets: [
+        {
+            id: 1,
+            audio: require('./assets/availableTweets/bird-whistling-robin.wav'),
+            image: require('./assets/availableTweets/robin.jpg')
+        },
+        {
+            id: 2,
+            audio: require('./assets/availableTweets/frog.mp3'),
+            image: require('./assets/availableTweets/frog.jpg')
+        }
+    ],
     pages: [
         {
             text: 'Find the path to the start of the waterfall',

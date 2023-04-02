@@ -5,9 +5,17 @@ type NavigationPanelProps = {
     onNext: any;
     onPrevious: any;
     onReturnToStart: any;
+    onReplay: any;
+    onOpenSounds: any;
 };
 
-const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({ onNext, onPrevious, onReturnToStart }) => {
+const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({
+    onNext,
+    onPrevious,
+    onReturnToStart,
+    onReplay,
+    onOpenSounds
+}) => {
     return (
         <View
             style={{
@@ -16,7 +24,7 @@ const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({ onNext
                 position: 'absolute',
                 alignContent: 'space-between',
                 right: 20,
-                bottom: 260
+                bottom: 20
             }}
         >
             {onPrevious && (
@@ -24,6 +32,24 @@ const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({ onNext
                     icon={'menu-left'}
                     onPress={() => {
                         onPrevious();
+                    }}
+                />
+            )}
+
+            {onReplay && (
+                <IconButton
+                    icon={'replay'}
+                    onPress={() => {
+                        onReplay();
+                    }}
+                />
+            )}
+
+            {onOpenSounds && (
+                <IconButton
+                    icon={'bird'}
+                    onPress={() => {
+                        onOpenSounds();
                     }}
                 />
             )}
