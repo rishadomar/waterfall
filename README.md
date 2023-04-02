@@ -18,6 +18,8 @@ https://micmonster.com/ with English US and Ana voice over
 Learn midjourney: https://www.linkedin.com/pulse/midjourney-basics-better-images-shane-curry/
 
 
+fade image: https://snack.expo.dev/@spencercarli/fade-in-an-image-with-react-native-with-the-animated-api
+
 # Deploy an APK
 
 See eas.json
