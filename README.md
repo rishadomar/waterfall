@@ -22,5 +22,3 @@ Learn midjourney: https://www.linkedin.com/pulse/midjourney-basics-better-images
 
 See eas.json
 eas build -p android --profile apk
-
-

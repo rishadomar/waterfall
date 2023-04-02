@@ -1,4 +1,5 @@
-import { StyleSheet, Image, ImageSourcePropType, View, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Image, Dimensions } from 'react-native';
 import { PageType } from '../story';
 
 type ImageViewerProps = {
@@ -6,19 +7,19 @@ type ImageViewerProps = {
 };
 
 const ImageViewer: React.FunctionComponent<ImageViewerProps> = ({ page }) => {
-    return (
-        <View style={styles.container}>
-            <Image source={page.image} style={styles.image} />
-            <Text style={styles.text}>{page.text}</Text>
-        </View>
-    );
+    // useEffect(() => {
+    //     Image.getSize(page.image, (width, height) => {
+    //         setImageDimensions({
+    //             width: width < windowDimensions.width - 50 ? width : windowDimensions.width - 50,
+    //             height: height < 250 ? height : 250
+    //         });
+    //     });
+    // }, []);
 };
 
 const styles = StyleSheet.create({
     container: {
-        position: 'relative',
-        width: 350,
-        height: 440
+        position: 'relative'
     },
     image: {
         width: '100%',
