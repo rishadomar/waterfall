@@ -17,10 +17,11 @@ type PageProps = {
 const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(undefined);
     const [viewSounds, setViewSounds] = useState<boolean>(false);
+    const [playingSound, setPlayingSound] = useState<Audio.Sound | null>(null);
 
     useEffect(() => {
         setAudioComplete(undefined);
-        setTimeout(playAudio, 3000);
+        setTimeout(playAudio, 2000);
     }, [page]);
 
     const onPlaybackStatusUpdate = (playbackStatus: AVPlaybackStatus) => {
@@ -44,6 +45,10 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
 
             if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
                 setAudioComplete(true);
+                if (playingSound !== null) {
+                    playingSound.unloadAsync();
+                    setPlayingSound(null);
+                }
                 // The player has just finished playing and will stop.
             }
         }
@@ -58,6 +63,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
             const { sound, status } = await Audio.Sound.createAsync(page.audio, {
                 shouldPlay: true
             });
+            setPlayingSound(sound);
             sound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
             console.log('End playing');
         } catch (error) {

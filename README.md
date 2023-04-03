@@ -12,6 +12,10 @@ https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
 
 https://icons.expo.fyi/
 
+https://cloudconvert.com/ogg-to-mp3
+
+https://freesound.org/people/egomassive/sounds/536759/
+
 
 https://micmonster.com/ with English US and Ana voice over
 

@@ -1,3 +1,4 @@
+import { Audio } from 'expo-av';
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Tweet } from '../story';
 
@@ -6,8 +7,25 @@ type TweetProps = {
 };
 
 const DisplayTweet: React.FunctionComponent<TweetProps> = ({ details }) => {
+    // const playTweet = async (details: Tweet) => {
+    //     const { sound, status } = await Audio.Sound.createAsync(details.audio, {
+    //         shouldPlay: true
+    //     });
+    // };
+
+    const playTweet = async (details: Tweet) => {
+        const sound = new Audio.Sound();
+        try {
+            await sound.loadAsync(details.audio);
+            await sound.playAsync();
+            // await sound.unloadAsync();
+        } catch (error) {
+            console.log('Error in loading sound', error);
+        }
+    };
+
     return (
-        <TouchableOpacity onPress={() => console.log('pressed')}>
+        <TouchableOpacity onPress={() => playTweet(details)}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={details.image} />
             </View>
