@@ -1,11 +1,10 @@
-import { Pressable, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 type PageTextProps = {
-    onPress: any;
     text: string;
 };
 
-const PageText: React.FunctionComponent<PageTextProps> = ({ onPress, text }) => {
+const PageText: React.FunctionComponent<PageTextProps> = ({ text }) => {
     return (
         <View
             style={{
@@ -14,9 +13,7 @@ const PageText: React.FunctionComponent<PageTextProps> = ({ onPress, text }) => 
                 left: 10
             }}
         >
-            <Pressable onPress={onPress}>
-                <Text style={styles.text}>{text}</Text>
-            </Pressable>
+            <Text style={styles.text}>{text}</Text>
         </View>
     );
 };
