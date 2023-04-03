@@ -20,16 +20,17 @@ const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({
         <View
             style={{
                 flex: 1,
-                flexDirection: 'row',
+                flexDirection: 'column',
                 position: 'absolute',
-                alignContent: 'space-between',
+                alignItems: 'center',
                 right: 20,
-                bottom: 20
+                bottom: 50
             }}
         >
             {onPrevious && (
                 <IconButton
                     icon={'menu-left'}
+                    size={40}
                     onPress={() => {
                         onPrevious();
                     }}
@@ -39,6 +40,7 @@ const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({
             {onReplay && (
                 <IconButton
                     icon={'replay'}
+                    size={40}
                     onPress={() => {
                         onReplay();
                     }}
@@ -48,6 +50,7 @@ const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({
             {onOpenSounds && (
                 <IconButton
                     icon={'bird'}
+                    size={40}
                     onPress={() => {
                         onOpenSounds();
                     }}

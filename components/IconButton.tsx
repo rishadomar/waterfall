@@ -12,7 +12,7 @@ interface IconButtonProps extends PropsWithChildren<any> {
 
 const IconButton: React.FunctionComponent<IconButtonProps> = ({ icon, label, onPress, size = 80 }) => {
     return (
-        <Pressable style={styles.iconButton} onPress={onPress}>
+        <Pressable style={[styles.iconButton, { height: size, width: size }]} onPress={onPress}>
             <MaterialCommunityIcons name={icon} size={size} color='white' />
             {label && <Text style={styles.iconButtonLabel}>{label}</Text>}
         </Pressable>
@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'black',
-        width: 80,
-        height: 80,
+        marginVertical: 10,
         borderRadius: 50
     },
     iconButtonLabel: {
