@@ -4,6 +4,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { PageType, Tweet } from '../story';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
+import { usePlayAudio } from './usePlayAudio';
 import ViewSounds from './ViewSounds';
 
 type PageProps = {
@@ -17,60 +18,12 @@ type PageProps = {
 const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(undefined);
     const [viewSounds, setViewSounds] = useState<boolean>(false);
-    const [playingSound, setPlayingSound] = useState<Audio.Sound | null>(null);
+    const [playAudio] = usePlayAudio((active) => setAudioComplete(active));
 
     useEffect(() => {
-        setAudioComplete(undefined);
-        setTimeout(playAudio, 2000);
-    }, [page]);
-
-    const onPlaybackStatusUpdate = (playbackStatus: AVPlaybackStatus) => {
-        if (!playbackStatus.isLoaded) {
-            // Update your UI for the unloaded state
-            if (playbackStatus.error) {
-                console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
-            }
-        } else {
-            // Update your UI for the loaded state
-
-            if (playbackStatus.isPlaying) {
-                // Update your UI for the playing state
-            } else {
-                // Update your UI for the paused state
-            }
-
-            if (playbackStatus.isBuffering) {
-                // Update your UI for the buffering state
-            }
-
-            if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
-                setAudioComplete(true);
-                if (playingSound !== null) {
-                    playingSound.unloadAsync();
-                    setPlayingSound(null);
-                }
-                // The player has just finished playing and will stop.
-            }
-        }
-    };
-
-    const playAudio = async () => {
-        if (audioComplete === false) {
-            return;
-        }
         setAudioComplete(false);
-        try {
-            const { sound, status } = await Audio.Sound.createAsync(page.audio, {
-                shouldPlay: true
-            });
-            setPlayingSound(sound);
-            sound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-            console.log('End playing');
-        } catch (error) {
-            // An error occurred!
-            console.log('Error playing');
-        }
-    };
+        setTimeout(() => playAudio(page.audio), 500);
+    }, [page]);
 
     return (
         <View style={styles.container}>
@@ -87,12 +40,15 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                         onNext={onNext}
                         onPrevious={onPrevious}
                         onReturnToStart={onReturnToStart}
-                        onReplay={playAudio}
+                        onReplay={() => {
+                            setAudioComplete(false);
+                            playAudio(page.audio);
+                        }}
                         onOpenSounds={() => setViewSounds(true)}
                     />
                 )}
 
-                {!viewSounds && !audioComplete && <PageText onPress={playAudio} text={page.text} />}
+                {!viewSounds && !audioComplete && <PageText text={page.text} />}
             </ImageBackground>
         </View>
     );
