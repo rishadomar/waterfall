@@ -41,6 +41,11 @@ NEXT AIM:
 
 
 
+State:
+    loadedPages: could be empty or just a few entries
+    storyPages: from story and loaded pages merged
+    availableTweets: from story and loaded pages merged
+
 
 
 

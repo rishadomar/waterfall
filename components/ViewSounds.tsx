@@ -1,16 +1,17 @@
 import { View, FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
-import { Tweet } from '../story';
+import { TweetType } from '../story.types';
 import DisplayTweet from './DisplayTweet';
 import Grid from './Grid';
 import SlideUpModal from './SlideUpModal';
 
 type ViewSoundsProps = {
+    pageNumber: number;
+    availableTweets: TweetType[];
     onClose: any;
-    availableTweets: Tweet[];
 };
 
-const ViewSounds: React.FunctionComponent<ViewSoundsProps> = ({ onClose, availableTweets }) => {
-    const renderTweet = (item: Tweet) => <DisplayTweet details={item} />;
+const ViewSounds: React.FunctionComponent<ViewSoundsProps> = ({ pageNumber, availableTweets, onClose }) => {
+    const renderTweet = (item: TweetType) => <DisplayTweet pageNumber={pageNumber} details={item} />;
 
     return (
         <SlideUpModal onClose={onClose}>

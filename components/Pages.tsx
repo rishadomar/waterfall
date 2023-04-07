@@ -16,7 +16,7 @@ const Pages: React.FunctionComponent = () => {
      * On startup: load saved Cards
      */
     useEffect(() => {
-        dispatch(fetchPages(Story));
+        dispatch(fetchPages());
     }, []);
 
     const onPreviousPage = () => {
@@ -43,9 +43,16 @@ const Pages: React.FunctionComponent = () => {
         return <Spinner visible={true} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />;
     }
 
+    const page = allPages.find((allPage) => allPage.pageNumber === currentPageNumber);
+    if (!page) {
+        return <Spinner visible={true} textContent={'Error loading...'} textStyle={{ color: '#FFF' }} />;
+    }
+
+    console.log('Page: ', page);
+
     return (
         <Page
-            page={allPages[currentPageNumber - 1]}
+            page={page}
             onNext={currentPageNumber < allPages.length ? onNextPage : null}
             onPrevious={currentPageNumber > 1 ? onPreviousPage : null}
             onReturnToStart={currentPageNumber === allPages.length ? onReturnToStart : null}

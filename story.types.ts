@@ -1,10 +1,11 @@
 import { ImageSourcePropType } from 'react-native/types';
 
 export interface PageType {
+    pageNumber: number;
     text: string;
     image: ImageSourcePropType;
     audio: any;
-    tweets: TweetType[];
+    tweets: TweetOnPageType[];
 }
 
 export interface TweetType {
@@ -22,8 +23,12 @@ export interface StoryType {
 }
 
 export interface TweetOnPageType {
-    pageNumber: number;
-    id: number;
+    tweetId: number;
     x: number;
     y: number;
+}
+
+export interface PageActivity {
+    pageNumber: number;
+    tweetsOnPage: TweetOnPageType[];
 }

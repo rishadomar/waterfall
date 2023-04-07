@@ -3,14 +3,22 @@ import { Animated, PanResponder, Image, StyleSheet, View, TouchableWithoutFeedba
 import { TweetType } from '../story.types';
 import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
+import { useAppSelector, useAppDispatch } from '../src/hooks';
+import { addTweetOnPage } from '../src/store/pagesSlice';
 
 type AnimatedTweetProps = {
     details: TweetType;
     onPress: (t: TweetType) => void;
     playingAudio: boolean;
+    onMoveTweet: (x: number, y: number) => void;
 };
 
-const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({ details, onPress, playingAudio }) => {
+const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
+    details,
+    onPress,
+    playingAudio,
+    onMoveTweet
+}) => {
     const pan = useRef(new Animated.ValueXY()).current;
     const panResponder = useRef(
         PanResponder.create({
@@ -18,7 +26,7 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({ details, o
             onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false }),
             onPanResponderRelease: (e, { dx, dy }) => {
                 pan.extractOffset();
-                console.log('Released...', dx, dy);
+                onMoveTweet(dx, dy);
             }
         })
     ).current;
@@ -41,10 +49,13 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({ details, o
 };
 
 type TweetProps = {
+    pageNumber: number;
     details: TweetType;
 };
 
-const DisplayTweet: React.FunctionComponent<TweetProps> = ({ details }) => {
+const DisplayTweet: React.FunctionComponent<TweetProps> = ({ pageNumber, details }) => {
+    const { allPages, availableTweets, loading } = useAppSelector((state) => state.pages);
+    const dispatch = useAppDispatch();
     const [playAudio] = usePlayAudio((_active) => {
         setPlayingAudio(false);
     });
@@ -56,7 +67,15 @@ const DisplayTweet: React.FunctionComponent<TweetProps> = ({ details }) => {
 
     return (
         <View style={{ margin: 10 }}>
-            <AnimatedTweet details={details} onPress={(tweet) => playTweet(tweet)} playingAudio={playingAudio} />
+            <AnimatedTweet
+                details={details}
+                onPress={(tweet) => playTweet(tweet)}
+                playingAudio={playingAudio}
+                onMoveTweet={(x, y) => {
+                    console.log('Tweet positioned to ', details, x, y);
+                    dispatch(addTweetOnPage({ pageNumber, tweetOnPage: { tweetId: details.id, x, y } }));
+                }}
+            />
         </View>
     );
 };

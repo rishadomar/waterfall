@@ -32,7 +32,13 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                 style={styles.image}
                 imageStyle={{ borderRadius: 18 }}
             >
-                {viewSounds && <ViewSounds onClose={() => setViewSounds(false)} availableTweets={availableTweets} />}
+                {viewSounds && (
+                    <ViewSounds
+                        pageNumber={page.pageNumber}
+                        onClose={() => setViewSounds(false)}
+                        availableTweets={availableTweets}
+                    />
+                )}
 
                 {!viewSounds && audioComplete && (
                     <NavigationPanel
