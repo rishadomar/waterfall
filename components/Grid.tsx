@@ -20,7 +20,11 @@ const Grid = ({ data, numColumns, renderComponent }: GridProps) => {
                 items.push(<View key={i} />);
             }
         }
-        return <View style={{ flexDirection: 'row' }}>{items}</View>;
+        return (
+            <View key={rowIndex} style={{ flexDirection: 'row' }}>
+                {items}
+            </View>
+        );
     };
 
     const rowsArray = [];
