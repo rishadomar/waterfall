@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { PageType, Tweet } from '../story';
+import { PageType, TweetType } from '../story.types';
 import Page from './Page';
+import { Story } from '../story';
+import { fetchPages, getAvailableTweets } from '../src/store/pagesSlice';
+import { useAppSelector, useAppDispatch } from '../src/hooks';
+import Spinner from 'react-native-loading-spinner-overlay';
 
-type PagesProps = {
-    pages: PageType[];
-    availableTweets: Tweet[];
-};
-
-const Pages: React.FunctionComponent<PagesProps> = ({ pages, availableTweets }) => {
+const Pages: React.FunctionComponent = () => {
+    const { allPages, availableTweets, loading } = useAppSelector((state) => state.pages);
+    const dispatch = useAppDispatch();
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
+
+    /**
+     * On startup: load saved Cards
+     */
+    useEffect(() => {
+        dispatch(fetchPages(Story));
+    }, []);
 
     const onPreviousPage = () => {
         if (currentPageNumber === 1) {
@@ -19,7 +27,7 @@ const Pages: React.FunctionComponent<PagesProps> = ({ pages, availableTweets }) 
     };
 
     const onNextPage = () => {
-        if (currentPageNumber === pages.length) {
+        if (currentPageNumber === allPages.length) {
             return;
         }
         setCurrentPageNumber((currentPage) => ++currentPage);
@@ -29,12 +37,18 @@ const Pages: React.FunctionComponent<PagesProps> = ({ pages, availableTweets }) 
         setCurrentPageNumber(1);
     };
 
+    console.log('Loading', loading);
+    console.log('Loading', loading);
+    if (loading === 'pending' || !allPages || allPages.length === 0) {
+        return <Spinner visible={true} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />;
+    }
+
     return (
         <Page
-            page={pages[currentPageNumber - 1]}
-            onNext={currentPageNumber < pages.length ? onNextPage : null}
+            page={allPages[currentPageNumber - 1]}
+            onNext={currentPageNumber < allPages.length ? onNextPage : null}
             onPrevious={currentPageNumber > 1 ? onPreviousPage : null}
-            onReturnToStart={currentPageNumber === pages.length ? onReturnToStart : null}
+            onReturnToStart={currentPageNumber === allPages.length ? onReturnToStart : null}
             availableTweets={availableTweets}
         />
     );

@@ -32,7 +32,8 @@ eas build -p android --profile apk
 
 
 # Next steps:
-
+NEXT AIM:
+* read available tweets
 * When released: save the released values on page + remove from available tweets
 * On page, draw animated tweets
 * drag a tweet back into panel to remove from page

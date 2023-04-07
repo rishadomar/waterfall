@@ -1,14 +1,17 @@
-import { StyleSheet, View } from 'react-native';
-import { Story } from './story';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import Pages from './components/Pages';
 import { StatusBar } from 'expo-status-bar';
+import { store } from './src/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Pages pages={Story.pages} availableTweets={Story.availableTweets} />
+        <SafeAreaView style={styles.container}>
+            <Provider store={store}>
+                <Pages />
+            </Provider>
             <StatusBar style='auto' />
-        </View>
+        </SafeAreaView>
     );
 }
 

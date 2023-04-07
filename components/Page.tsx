@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
-import { PageType, Tweet } from '../story';
+import { PageType, TweetType } from '../story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
 import { usePlayAudio } from './usePlayAudio';
@@ -11,7 +11,7 @@ type PageProps = {
     onNext: any;
     onPrevious: any;
     onReturnToStart: any;
-    availableTweets: Tweet[];
+    availableTweets: TweetType[];
 };
 
 const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
