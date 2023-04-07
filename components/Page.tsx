@@ -1,4 +1,3 @@
-import { Audio, AVPlaybackStatus } from 'expo-av';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { PageType, Tweet } from '../story';

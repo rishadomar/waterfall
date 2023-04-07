@@ -21,6 +21,7 @@ https://micmonster.com/ with English US and Ana voice over
 
 Learn midjourney: https://www.linkedin.com/pulse/midjourney-basics-better-images-shane-curry/
 
+Drag and drop: https://reactnative.dev/docs/panresponder
 
 fade image: https://snack.expo.dev/@spencercarli/fade-in-an-image-with-react-native-with-the-animated-api
 
@@ -28,3 +29,19 @@ fade image: https://snack.expo.dev/@spencercarli/fade-in-an-image-with-react-nat
 
 See eas.json
 eas build -p android --profile apk
+
+
+# Next steps:
+
+* When released: save the released values on page + remove from available tweets
+* On page, draw animated tweets
+* drag a tweet back into panel to remove from page
+
+
+
+
+
+
+
+
+

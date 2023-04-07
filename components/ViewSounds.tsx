@@ -1,6 +1,7 @@
-import { FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
+import { View, FlatList, ListRenderItem, StyleSheet, Text } from 'react-native';
 import { Tweet } from '../story';
 import DisplayTweet from './DisplayTweet';
+import Grid from './Grid';
 import SlideUpModal from './SlideUpModal';
 
 type ViewSoundsProps = {
@@ -9,16 +10,11 @@ type ViewSoundsProps = {
 };
 
 const ViewSounds: React.FunctionComponent<ViewSoundsProps> = ({ onClose, availableTweets }) => {
-    const renderItem: ListRenderItem<Tweet> = ({ item }) => <DisplayTweet details={item} />;
+    const renderTweet = (item: Tweet) => <DisplayTweet details={item} />;
 
     return (
         <SlideUpModal onClose={onClose}>
-            <FlatList
-                data={availableTweets}
-                numColumns={4}
-                //renderItem={({ availableTweet: ListRenderItem<Tweet> }) => <DisplayTweet details={availableTweet} />}
-                renderItem={renderItem}
-            ></FlatList>
+            <Grid data={availableTweets} numColumns={4} renderComponent={renderTweet} />
         </SlideUpModal>
     );
 };
