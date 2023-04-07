@@ -34,6 +34,16 @@ export const Story: StoryType = {
             id: 2,
             audio: require('./assets/availableTweets/frog.mp3'),
             image: require('./assets/availableTweets/frog.jpg')
+        },
+        {
+            id: 3,
+            audio: require('./assets/availableTweets/bubbly_brook.wav'),
+            image: require('./assets/availableTweets/bubbling-brook.png')
+        },
+        {
+            id: 4,
+            audio: require('./assets/availableTweets/waterfall.wav'),
+            image: require('./assets/availableTweets/waterfall.png')
         }
     ],
     pages: [
