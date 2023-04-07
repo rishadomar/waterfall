@@ -1,14 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Animated, PanResponder, Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
-import { Tweet } from '../story';
+import { TweetType } from '../story.types';
+import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
 
 type AnimatedTweetProps = {
-    details: Tweet;
-    onPress: (t: Tweet) => void;
+    details: TweetType;
+    onPress: (t: TweetType) => void;
+    playingAudio: boolean;
 };
 
-const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({ details, onPress }) => {
+const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({ details, onPress, playingAudio }) => {
     const pan = useRef(new Animated.ValueXY()).current;
     const panResponder = useRef(
         PanResponder.create({
@@ -33,23 +35,28 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({ details, o
                     <Image style={styles.image} source={details.image} />
                 </View>
             </TouchableWithoutFeedback>
+            {playingAudio && <RedDot size={20} />}
         </Animated.View>
     );
 };
 
 type TweetProps = {
-    details: Tweet;
+    details: TweetType;
 };
 
 const DisplayTweet: React.FunctionComponent<TweetProps> = ({ details }) => {
-    const [playAudio] = usePlayAudio((_active) => {});
-    const playTweet = async (details: Tweet) => {
+    const [playAudio] = usePlayAudio((_active) => {
+        setPlayingAudio(false);
+    });
+    const [playingAudio, setPlayingAudio] = useState(false);
+    const playTweet = async (details: TweetType) => {
+        setPlayingAudio(true);
         playAudio(details.audio);
     };
 
     return (
         <View style={{ margin: 10 }}>
-            <AnimatedTweet details={details} onPress={(tweet) => playTweet(tweet)} />
+            <AnimatedTweet details={details} onPress={(tweet) => playTweet(tweet)} playingAudio={playingAudio} />
         </View>
     );
 };
@@ -64,5 +71,9 @@ const styles = StyleSheet.create({
     image: {
         width: 70,
         height: 70
+    },
+    playingImage: {
+        width: 100,
+        height: 100
     }
 });
