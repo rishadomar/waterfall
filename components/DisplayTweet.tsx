@@ -71,9 +71,8 @@ const DisplayTweet: React.FunctionComponent<TweetProps> = ({ pageNumber, details
                 details={details}
                 onPress={(tweet) => playTweet(tweet)}
                 playingAudio={playingAudio}
-                onMoveTweet={(x, y) => {
-                    console.log('Tweet positioned to ', details, x, y);
-                    dispatch(addTweetOnPage({ pageNumber, tweetOnPage: { tweetId: details.id, x, y } }));
+                onMoveTweet={() => {
+                    dispatch(addTweetOnPage({ pageNumber, tweetOnPage: { tweetId: details.id, x: 0, y: 0 } }));
                 }}
             />
         </View>
@@ -84,7 +83,7 @@ export default DisplayTweet;
 
 const styles = StyleSheet.create({
     imageContainer: {
-        borderRadius: 50,
+        borderRadius: 35,
         overflow: 'hidden'
     },
     image: {

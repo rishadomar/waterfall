@@ -3,6 +3,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { PageType, TweetType } from '../story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
+import SlideUpModal from './SlideUpModal';
 import { usePlayAudio } from './usePlayAudio';
 import ViewSounds from './ViewSounds';
 
@@ -24,6 +25,11 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
         setTimeout(() => playAudio(page.audio), 500);
     }, [page]);
 
+    const foundTweets = availableTweets.filter((a) => {
+        const foundTweet = page.tweets.find((pt) => pt.tweetId === a.id);
+        return foundTweet ? true : false;
+    });
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -33,24 +39,37 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                 imageStyle={{ borderRadius: 18 }}
             >
                 {viewSounds && (
-                    <ViewSounds
-                        pageNumber={page.pageNumber}
-                        onClose={() => setViewSounds(false)}
-                        availableTweets={availableTweets}
-                    />
+                    <SlideUpModal onClose={() => setViewSounds(false)}>
+                        <ViewSounds
+                            pageNumber={page.pageNumber}
+                            availableTweets={availableTweets}
+                            usedTweets={page.tweets}
+                        />
+                    </SlideUpModal>
                 )}
 
-                {!viewSounds && audioComplete && (
-                    <NavigationPanel
-                        onNext={onNext}
-                        onPrevious={onPrevious}
-                        onReturnToStart={onReturnToStart}
-                        onReplay={() => {
-                            setAudioComplete(false);
-                            playAudio(page.audio);
-                        }}
-                        onOpenSounds={() => setViewSounds(true)}
-                    />
+                {!viewSounds && audioComplete && foundTweets.length > 0 && (
+                    <>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                bottom: 10,
+                                left: 10
+                            }}
+                        >
+                            <ViewSounds pageNumber={page.pageNumber} availableTweets={foundTweets} usedTweets={[]} />
+                        </View>
+                        <NavigationPanel
+                            onNext={onNext}
+                            onPrevious={onPrevious}
+                            onReturnToStart={onReturnToStart}
+                            onReplay={() => {
+                                setAudioComplete(false);
+                                playAudio(page.audio);
+                            }}
+                            onOpenSounds={() => setViewSounds(true)}
+                        />
+                    </>
                 )}
 
                 {!viewSounds && !audioComplete && <PageText text={page.text} />}

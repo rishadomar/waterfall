@@ -24,7 +24,7 @@ const NavigationPanel: React.FunctionComponent<NavigationPanelProps> = ({
                 position: 'absolute',
                 alignItems: 'center',
                 right: 20,
-                bottom: 50
+                bottom: 150
             }}
         >
             {onPrevious && (
