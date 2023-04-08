@@ -23,7 +23,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
     useEffect(() => {
         setAudioComplete(false);
         setTimeout(() => playAudio(page.audio), 500);
-    }, [page]);
+    }, [page.pageNumber]);
 
     const foundTweets = availableTweets.filter((a) => {
         const foundTweet = page.tweets.find((pt) => pt.tweetId === a.id);
@@ -48,17 +48,23 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                     </SlideUpModal>
                 )}
 
-                {!viewSounds && audioComplete && foundTweets.length > 0 && (
+                {!viewSounds && audioComplete && (
                     <>
-                        <View
-                            style={{
-                                position: 'absolute',
-                                bottom: 10,
-                                left: 10
-                            }}
-                        >
-                            <ViewSounds pageNumber={page.pageNumber} availableTweets={foundTweets} usedTweets={[]} />
-                        </View>
+                        {foundTweets.length > 0 && (
+                            <View
+                                style={{
+                                    position: 'absolute',
+                                    bottom: 10,
+                                    left: 10
+                                }}
+                            >
+                                <ViewSounds
+                                    pageNumber={page.pageNumber}
+                                    availableTweets={foundTweets}
+                                    usedTweets={[]}
+                                />
+                            </View>
+                        )}
                         <NavigationPanel
                             onNext={onNext}
                             onPrevious={onPrevious}

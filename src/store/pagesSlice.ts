@@ -40,18 +40,62 @@ export const addTweetOnPage = createAsyncThunk(
         );
         if (foundPageActivity) {
             console.log('this page has been found in async.', foundPageActivity);
+            const newTweetsOnPage: TweetOnPageType[] = [
+                ...foundPageActivity.tweetsOnPage,
+                { ...addTweetOnPageParams.tweetOnPage }
+            ];
             const pageActivity: PageActivity = {
                 ...foundPageActivity,
-                tweetsOnPage: [...foundPageActivity.tweetsOnPage, { ...addTweetOnPageParams.tweetOnPage }]
+                tweetsOnPage: [...newTweetsOnPage]
             };
             await AsyncStorage.mergeItem(addTweetOnPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
+
+            return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage };
         } else {
             console.log('this page has no activity. Adding for the first time.');
+            const newTweetsOnPage: TweetOnPageType[] = [{ ...addTweetOnPageParams.tweetOnPage }];
             const pageActivity: PageActivity = {
                 pageNumber: addTweetOnPageParams.pageNumber,
-                tweetsOnPage: [addTweetOnPageParams.tweetOnPage]
+                tweetsOnPage: [...newTweetsOnPage]
             };
             await AsyncStorage.setItem(addTweetOnPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
+
+            return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage };
+        }
+    }
+);
+
+export interface RemoveTweetFromPageParams {
+    pageNumber: number;
+    tweetIdToRemove: number;
+}
+
+export const removeTweetFromPage = createAsyncThunk(
+    'pages/removeTweetFromPage',
+    async (removeTweetFromPageParams: RemoveTweetFromPageParams, thunkAPI) => {
+        console.log('Remove tweet', removeTweetFromPageParams);
+        const pagesState = (thunkAPI.getState() as RootState).pages;
+        const foundPageActivity = pagesState.pagesActivities.find(
+            (pagesActivity) => pagesActivity.pageNumber === removeTweetFromPageParams.pageNumber
+        );
+        if (foundPageActivity) {
+            console.log('this page has been found in async.', foundPageActivity);
+
+            const remainingTweetsOnPage: TweetOnPageType[] = [];
+            foundPageActivity.tweetsOnPage.forEach((tweetOnPage) => {
+                if (tweetOnPage.tweetId !== removeTweetFromPageParams.tweetIdToRemove) {
+                    remainingTweetsOnPage.push({ ...tweetOnPage });
+                }
+            });
+            const pageActivity: PageActivity = {
+                ...foundPageActivity,
+                tweetsOnPage: remainingTweetsOnPage
+            };
+            await AsyncStorage.mergeItem(removeTweetFromPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
+            return { pageNumber: removeTweetFromPageParams.pageNumber, remainingTweetsOnPage };
+        } else {
+            console.log('this page has no activity. So cannot remove.');
+            return null;
         }
     }
 );
@@ -107,6 +151,37 @@ export const pagesSlice = createSlice({
 
         builder.addCase(fetchPages.pending, (state, action) => {
             state.loading = 'pending';
+        });
+
+        builder.addCase(addTweetOnPage.fulfilled, (state, action) => {
+            //
+            // Apply the async data to the static pages
+            //
+            console.log('Add Tweet fulfilled', action.payload.newTweetsOnPage);
+            const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
+            if (foundPage) {
+                foundPage.tweets = [...action.payload.newTweetsOnPage];
+            }
+
+            // Done
+            state.loading = 'succeeded';
+        });
+
+        builder.addCase(removeTweetFromPage.fulfilled, (state, action) => {
+            //
+            // Apply the async data to the static pages
+            //
+            console.log('Remove fulfilled', action.payload?.remainingTweetsOnPage);
+            if (!action.payload) {
+                return;
+            }
+            const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
+            if (foundPage) {
+                foundPage.tweets = action.payload.remainingTweetsOnPage;
+            }
+
+            // Done
+            state.loading = 'succeeded';
         });
     }
 });

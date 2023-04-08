@@ -4,20 +4,22 @@ import { TweetType } from '../story.types';
 import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
 import { useAppSelector, useAppDispatch } from '../src/hooks';
-import { addTweetOnPage } from '../src/store/pagesSlice';
+import { addTweetOnPage, removeTweetFromPage } from '../src/store/pagesSlice';
 
 type AnimatedTweetProps = {
     details: TweetType;
     onPress: (t: TweetType) => void;
     playingAudio: boolean;
     onMoveTweet: (x: number, y: number) => void;
+    onLongPress: any;
 };
 
 const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
     details,
     onPress,
     playingAudio,
-    onMoveTweet
+    onMoveTweet,
+    onLongPress
 }) => {
     const pan = useRef(new Animated.ValueXY()).current;
     const panResponder = useRef(
@@ -38,7 +40,7 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
             }}
             {...panResponder.panHandlers}
         >
-            <TouchableWithoutFeedback onPress={() => onPress(details)}>
+            <TouchableWithoutFeedback onPress={() => onPress(details)} onLongPress={() => onLongPress(details)}>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={details.image} />
                 </View>
@@ -73,6 +75,9 @@ const DisplayTweet: React.FunctionComponent<TweetProps> = ({ pageNumber, details
                 playingAudio={playingAudio}
                 onMoveTweet={() => {
                     dispatch(addTweetOnPage({ pageNumber, tweetOnPage: { tweetId: details.id, x: 0, y: 0 } }));
+                }}
+                onLongPress={() => {
+                    dispatch(removeTweetFromPage({ pageNumber, tweetIdToRemove: details.id }));
                 }}
             />
         </View>

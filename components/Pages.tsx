@@ -37,8 +37,6 @@ const Pages: React.FunctionComponent = () => {
         setCurrentPageNumber(1);
     };
 
-    console.log('Loading', loading);
-    console.log('Loading', loading);
     if (loading === 'pending' || !allPages || allPages.length === 0) {
         return <Spinner visible={true} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />;
     }
