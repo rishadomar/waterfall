@@ -19,16 +19,21 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(undefined);
     const [viewSounds, setViewSounds] = useState<boolean>(false);
     const [playAudio] = usePlayAudio((active) => setAudioComplete(active));
+    const [pageTweets, setPageTweets] = useState<TweetType[]>([]);
 
     useEffect(() => {
         setAudioComplete(false);
         setTimeout(() => playAudio(page.audio), 500);
-    }, [page.pageNumber]);
 
-    const foundTweets = availableTweets.filter((a) => {
-        const foundTweet = page.tweets.find((pt) => pt.tweetId === a.id);
-        return foundTweet ? true : false;
-    });
+        const foundTweets: TweetType[] = [];
+        page.tweets.forEach((pt) => {
+            const foundTweet = availableTweets.find((at) => at.id === pt.tweetId);
+            if (foundTweet) {
+                foundTweets.push(foundTweet);
+            }
+        });
+        setPageTweets([...foundTweets]);
+    }, [page.pageNumber]);
 
     return (
         <View style={styles.container}>
@@ -50,7 +55,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
 
                 {!viewSounds && audioComplete && (
                     <>
-                        {foundTweets.length > 0 && (
+                        {pageTweets.length > 0 && (
                             <View
                                 style={{
                                     position: 'absolute',
@@ -58,11 +63,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                                     left: 10
                                 }}
                             >
-                                <ViewSounds
-                                    pageNumber={page.pageNumber}
-                                    availableTweets={foundTweets}
-                                    usedTweets={[]}
-                                />
+                                <ViewSounds pageNumber={page.pageNumber} availableTweets={pageTweets} usedTweets={[]} />
                             </View>
                         )}
                         <NavigationPanel
