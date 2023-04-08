@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, View, ImageBackground } from 'react-native';
+import { useEffect, useState, useRef } from 'react';
+import { StyleSheet, View, ImageBackground, LayoutChangeEvent } from 'react-native';
 import { PageType, TweetType } from '../story.types';
+import DisplayTweet from './DisplayTweet';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
 import { usePlayAudio } from './usePlayAudio';
@@ -15,6 +16,7 @@ type PageProps = {
 };
 
 const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
+    const mainParentRef = useRef<View>(null);
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(undefined);
     const [viewSounds, setViewSounds] = useState<boolean>(false);
     const [playAudio] = usePlayAudio((active) => setAudioComplete(active));
@@ -25,7 +27,14 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
     }, [page]);
 
     return (
-        <View style={styles.container}>
+        <View
+            style={styles.container}
+            ref={mainParentRef}
+            onLayout={(event: LayoutChangeEvent) => {
+                const { x, y } = event.nativeEvent.layout;
+                console.log('OnLayout of Page', x, y);
+            }}
+        >
             <ImageBackground
                 source={page.image}
                 resizeMode='cover'
@@ -37,20 +46,42 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                         pageNumber={page.pageNumber}
                         onClose={() => setViewSounds(false)}
                         availableTweets={availableTweets}
+                        mainParentRef={mainParentRef}
+                        usedTweets={page.tweets}
                     />
                 )}
 
-                {!viewSounds && audioComplete && (
-                    <NavigationPanel
-                        onNext={onNext}
-                        onPrevious={onPrevious}
-                        onReturnToStart={onReturnToStart}
-                        onReplay={() => {
-                            setAudioComplete(false);
-                            playAudio(page.audio);
-                        }}
-                        onOpenSounds={() => setViewSounds(true)}
-                    />
+                {audioComplete && (
+                    <>
+                        {page.tweets.map((tweetOnPage) => {
+                            const foundTweet = availableTweets.find((a) => a.id === tweetOnPage.tweetId);
+                            if (foundTweet) {
+                                return (
+                                    <DisplayTweet
+                                        details={foundTweet}
+                                        mainParentRef={null}
+                                        pageNumber={page.pageNumber}
+                                        key={foundTweet.id}
+                                        positionX={tweetOnPage.x}
+                                        positionY={tweetOnPage.y}
+                                    />
+                                );
+                            } else {
+                                return null;
+                            }
+                        })}
+
+                        <NavigationPanel
+                            onNext={onNext}
+                            onPrevious={onPrevious}
+                            onReturnToStart={onReturnToStart}
+                            onReplay={() => {
+                                setAudioComplete(false);
+                                playAudio(page.audio);
+                            }}
+                            onOpenSounds={() => setViewSounds(true)}
+                        />
+                    </>
                 )}
 
                 {!viewSounds && !audioComplete && <PageText text={page.text} />}

@@ -1,5 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { Animated, PanResponder, Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import React, { Ref, useRef, useState } from 'react';
+import {
+    Animated,
+    PanResponder,
+    Image,
+    StyleSheet,
+    View,
+    TouchableWithoutFeedback,
+    LayoutChangeEvent
+} from 'react-native';
 import { TweetType } from '../story.types';
 import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
@@ -10,7 +18,7 @@ type AnimatedTweetProps = {
     details: TweetType;
     onPress: (t: TweetType) => void;
     playingAudio: boolean;
-    onMoveTweet: (x: number, y: number) => void;
+    onMoveTweet: any;
 };
 
 const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
@@ -19,20 +27,26 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
     playingAudio,
     onMoveTweet
 }) => {
-    const pan = useRef(new Animated.ValueXY()).current;
+    const pan = useRef<Animated.ValueXY>(new Animated.ValueXY()).current;
     const panResponder = useRef(
         PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
             onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false }),
             onPanResponderRelease: (e, { dx, dy }) => {
                 pan.extractOffset();
-                onMoveTweet(dx, dy);
+                console.log('Panx.Pany', pan.x, pan.y);
+                draggedComponentRef.current?.measure((fx, fy, width, height, px, py) => {
+                    console.log('Position of tweet: ', fx, fy, width, height, px, py);
+                    onMoveTweet(fx, fy, width, height, px, py);
+                });
             }
         })
     ).current;
+    const draggedComponentRef = useRef<View>(null);
 
     return (
         <Animated.View
+            ref={draggedComponentRef}
             style={{
                 transform: [{ translateX: pan.x }, { translateY: pan.y }]
             }}
@@ -51,9 +65,18 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
 type TweetProps = {
     pageNumber: number;
     details: TweetType;
+    mainParentRef: Ref<View>;
+    positionX?: number | null;
+    positionY?: number | null;
 };
 
-const DisplayTweet: React.FunctionComponent<TweetProps> = ({ pageNumber, details }) => {
+const DisplayTweet: React.FunctionComponent<TweetProps> = ({
+    pageNumber,
+    details,
+    mainParentRef,
+    positionX = null,
+    positionY = null
+}) => {
     const { allPages, availableTweets, loading } = useAppSelector((state) => state.pages);
     const dispatch = useAppDispatch();
     const [playAudio] = usePlayAudio((_active) => {
@@ -64,16 +87,43 @@ const DisplayTweet: React.FunctionComponent<TweetProps> = ({ pageNumber, details
         setPlayingAudio(true);
         playAudio(details.audio);
     };
+    const [offsetX, setOffsetX] = useState(0);
+    const [offsetY, setOffsetY] = useState(0);
 
     return (
-        <View style={{ margin: 10 }}>
+        <View
+            style={[
+                { margin: 10 },
+                positionX && positionY ? { position: 'absolute', top: positionX, left: positionY } : {}
+            ]}
+            onLayout={(event: LayoutChangeEvent) => {
+                const { x, y } = event.nativeEvent.layout;
+                console.log('OnLayout of parent of AnimatedTweet', x, y);
+            }}
+        >
             <AnimatedTweet
                 details={details}
                 onPress={(tweet) => playTweet(tweet)}
                 playingAudio={playingAudio}
-                onMoveTweet={(x, y) => {
-                    console.log('Tweet positioned to ', details, x, y);
-                    dispatch(addTweetOnPage({ pageNumber, tweetOnPage: { tweetId: details.id, x, y } }));
+                onMoveTweet={(
+                    draggedItemFx,
+                    draggedItemFy,
+                    draggedItemWidth,
+                    draggedItemHeight,
+                    draggedItemPx,
+                    draggedItemPy
+                ) => {
+                    mainParentRef?.current?.measure((fx, fy, width, height, px, py) => {
+                        const positionX = px - offsetX;
+                        const positionY = py - offsetY;
+                        console.log('Position on screen:', draggedItemPx, draggedItemPy);
+                        dispatch(
+                            addTweetOnPage({
+                                pageNumber,
+                                tweetOnPage: { tweetId: details.id, x: draggedItemPx, y: draggedItemPy }
+                            })
+                        );
+                    });
                 }}
             />
         </View>
@@ -84,7 +134,7 @@ export default DisplayTweet;
 
 const styles = StyleSheet.create({
     imageContainer: {
-        borderRadius: 50,
+        borderRadius: 35,
         overflow: 'hidden'
     },
     image: {
