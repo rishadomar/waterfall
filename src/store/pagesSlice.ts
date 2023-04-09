@@ -35,33 +35,19 @@ export const addTweetOnPage = createAsyncThunk(
     async (addTweetOnPageParams: AddTweetOnPageParams, thunkAPI) => {
         console.log('Add tweet', addTweetOnPageParams);
         const pagesState = (thunkAPI.getState() as RootState).pages;
-        const foundPageActivity = pagesState.pagesActivities.find(
-            (pagesActivity) => pagesActivity.pageNumber === addTweetOnPageParams.pageNumber
-        );
-        if (foundPageActivity) {
-            console.log('this page has been found in async.', foundPageActivity);
-            const newTweetsOnPage: TweetOnPageType[] = [
-                ...foundPageActivity.tweetsOnPage,
-                { ...addTweetOnPageParams.tweetOnPage }
-            ];
-            const pageActivity: PageActivity = {
-                ...foundPageActivity,
-                tweetsOnPage: [...newTweetsOnPage]
-            };
-            await AsyncStorage.mergeItem(addTweetOnPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
-
-            return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage };
-        } else {
-            console.log('this page has no activity. Adding for the first time.');
-            const newTweetsOnPage: TweetOnPageType[] = [{ ...addTweetOnPageParams.tweetOnPage }];
-            const pageActivity: PageActivity = {
-                pageNumber: addTweetOnPageParams.pageNumber,
-                tweetsOnPage: [...newTweetsOnPage]
-            };
-            await AsyncStorage.setItem(addTweetOnPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
-
-            return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage };
+        const foundPage = pagesState.allPages.find((page) => page.pageNumber === addTweetOnPageParams.pageNumber);
+        if (!foundPage) {
+            return null;
         }
+        const newTweetsOnPage: TweetOnPageType[] = [...foundPage.tweets, { ...addTweetOnPageParams.tweetOnPage }];
+
+        const pageActivity: PageActivity = {
+            pageNumber: addTweetOnPageParams.pageNumber,
+            tweetsOnPage: [...newTweetsOnPage]
+        };
+        await AsyncStorage.mergeItem(addTweetOnPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
+
+        return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage: [...newTweetsOnPage] };
     }
 );
 
@@ -75,33 +61,33 @@ export const removeTweetFromPage = createAsyncThunk(
     async (removeTweetFromPageParams: RemoveTweetFromPageParams, thunkAPI) => {
         console.log('Remove tweet', removeTweetFromPageParams);
         const pagesState = (thunkAPI.getState() as RootState).pages;
-        const foundPageActivity = pagesState.pagesActivities.find(
-            (pagesActivity) => pagesActivity.pageNumber === removeTweetFromPageParams.pageNumber
-        );
-        if (foundPageActivity) {
-            console.log('this page has been found in async.', foundPageActivity);
 
-            const remainingTweetsOnPage: TweetOnPageType[] = [];
-            foundPageActivity.tweetsOnPage.forEach((tweetOnPage) => {
-                if (tweetOnPage.tweetId !== removeTweetFromPageParams.tweetIdToRemove) {
-                    remainingTweetsOnPage.push({ ...tweetOnPage });
-                }
-            });
-            const pageActivity: PageActivity = {
-                ...foundPageActivity,
-                tweetsOnPage: remainingTweetsOnPage
-            };
-            await AsyncStorage.mergeItem(removeTweetFromPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
-            return { pageNumber: removeTweetFromPageParams.pageNumber, remainingTweetsOnPage };
-        } else {
-            console.log('this page has no activity. So cannot remove.');
+        const foundPage = pagesState.allPages.find((page) => page.pageNumber === removeTweetFromPageParams.pageNumber);
+        if (!foundPage) {
             return null;
         }
+
+        const remainingTweetsOnPage: TweetOnPageType[] = [];
+        foundPage.tweets.forEach((tweetOnPage) => {
+            if (tweetOnPage.tweetId !== removeTweetFromPageParams.tweetIdToRemove) {
+                remainingTweetsOnPage.push({ ...tweetOnPage });
+            }
+        });
+        const pageActivity: PageActivity = {
+            pageNumber: removeTweetFromPageParams.pageNumber,
+            tweetsOnPage: [...remainingTweetsOnPage]
+        };
+
+        await AsyncStorage.mergeItem(removeTweetFromPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
+
+        return {
+            pageNumber: removeTweetFromPageParams.pageNumber,
+            remainingTweetsOnPage: [...remainingTweetsOnPage]
+        };
     }
 );
 
 interface PagesState {
-    pagesActivities: PageActivity[];
     allPages: PageType[];
     availableTweets: TweetType[];
     loading: string;
@@ -109,7 +95,6 @@ interface PagesState {
 
 // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
 const initialState: PagesState = {
-    pagesActivities: [], // saved in Async data (for internal use)
     allPages: [], // From story + async data applied
     availableTweets: [], // From story + async data applied
     loading: 'idle'
@@ -131,14 +116,9 @@ export const pagesSlice = createSlice({
             state.availableTweets = Story.availableTweets;
 
             //
-            // Load async data
-            //
-            state.pagesActivities = action.payload;
-
-            //
             // Apply the async data to the static pages
             //
-            state.pagesActivities.forEach((pageActivity) => {
+            action.payload.forEach((pageActivity) => {
                 const foundPage = state.allPages.find((allPage) => allPage.pageNumber === pageActivity.pageNumber);
                 if (foundPage) {
                     foundPage.tweets = pageActivity.tweetsOnPage;
@@ -157,10 +137,12 @@ export const pagesSlice = createSlice({
             //
             // Apply the async data to the static pages
             //
-            console.log('Add Tweet fulfilled', action.payload.newTweetsOnPage);
-            const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
-            if (foundPage) {
-                foundPage.tweets = [...action.payload.newTweetsOnPage];
+            if (action.payload !== null) {
+                console.log('Add Tweet fulfilled', action.payload.newTweetsOnPage);
+                const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
+                if (foundPage) {
+                    foundPage.tweets = action.payload.newTweetsOnPage;
+                }
             }
 
             // Done
@@ -171,13 +153,12 @@ export const pagesSlice = createSlice({
             //
             // Apply the async data to the static pages
             //
-            console.log('Remove fulfilled', action.payload?.remainingTweetsOnPage);
-            if (!action.payload) {
-                return;
-            }
-            const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
-            if (foundPage) {
-                foundPage.tweets = action.payload.remainingTweetsOnPage;
+            if (action.payload !== null) {
+                console.log('Remove fulfilled', action.payload?.remainingTweetsOnPage);
+                const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
+                if (foundPage) {
+                    foundPage.tweets = action.payload.remainingTweetsOnPage;
+                }
             }
 
             // Done

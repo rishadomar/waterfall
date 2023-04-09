@@ -15,9 +15,7 @@ const Grid = ({ data, numColumns, renderComponent }: GridProps) => {
         for (let i = 0; i < numColumns; i++) {
             const index = rowIndex * numColumns + i;
             if (index < data.length) {
-                items.push(<View key={index}>{renderComponent(data[index])}</View>);
-            } else {
-                items.push(<View key={i} />);
+                items.push(<View key={data[index].id}>{renderComponent(data[index])}</View>);
             }
         }
         return (

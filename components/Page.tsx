@@ -24,7 +24,9 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
     useEffect(() => {
         setAudioComplete(false);
         setTimeout(() => playAudio(page.audio), 500);
+    }, [page.pageNumber]);
 
+    useEffect(() => {
         const foundTweets: TweetType[] = [];
         page.tweets.forEach((pt) => {
             const foundTweet = availableTweets.find((at) => at.id === pt.tweetId);
@@ -33,7 +35,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
             }
         });
         setPageTweets([...foundTweets]);
-    }, [page.pageNumber]);
+    }, [page.pageNumber, page.tweets]);
 
     return (
         <View style={styles.container}>
@@ -53,14 +55,17 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                     </SlideUpModal>
                 )}
 
-                {!viewSounds && audioComplete && (
+                {audioComplete && (
                     <>
                         {pageTweets.length > 0 && (
                             <View
                                 style={{
+                                    flex: 1,
+                                    flexDirection: 'column',
                                     position: 'absolute',
-                                    bottom: 10,
-                                    left: 10
+                                    alignItems: 'center',
+                                    left: 20,
+                                    bottom: 150
                                 }}
                             >
                                 <ViewSounds pageNumber={page.pageNumber} availableTweets={pageTweets} usedTweets={[]} />
