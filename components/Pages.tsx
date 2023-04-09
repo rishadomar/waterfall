@@ -46,8 +46,6 @@ const Pages: React.FunctionComponent = () => {
         return <Spinner visible={true} textContent={'Error loading...'} textStyle={{ color: '#FFF' }} />;
     }
 
-    console.log('Page: ', page);
-
     return (
         <Page
             page={page}

@@ -8,7 +8,7 @@ export const usePlayAudio = (onEndOfPlay: (active: boolean) => void): [(audio: A
         if (!playbackStatus.isLoaded) {
             // Update your UI for the unloaded state
             if (playbackStatus.error) {
-                console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
+                console.error(`Encountered a fatal error during playback: ${playbackStatus.error}`);
             }
         } else {
             // Update your UI for the loaded state
@@ -41,7 +41,7 @@ export const usePlayAudio = (onEndOfPlay: (active: boolean) => void): [(audio: A
             sound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
         } catch (error) {
             // An error occurred!
-            console.log('Error playing', error);
+            console.error('Error playing', error);
         }
     };
 
