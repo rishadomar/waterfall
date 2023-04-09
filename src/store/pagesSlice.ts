@@ -6,7 +6,6 @@ import { Story } from '../../story';
 
 export const fetchPages = createAsyncThunk('pages/fetchPages', async (_notUsed, thunkAPI) => {
     const keys = await AsyncStorage.getAllKeys();
-    console.log('Keys from async storage', keys);
     const pagesActivities: PageActivity[] = [];
     if (!keys || keys.length === 0) {
         return pagesActivities;
@@ -17,7 +16,6 @@ export const fetchPages = createAsyncThunk('pages/fetchPages', async (_notUsed, 
     );
     pageActivitiesResults.map((result, index) => {
         if (result !== null) {
-            console.log('Read from async: ', JSON.parse(result), '+ key', keys[index]);
             pagesActivities.push({ ...JSON.parse(result) });
         }
     });
@@ -33,7 +31,6 @@ export interface AddTweetOnPageParams {
 export const addTweetOnPage = createAsyncThunk(
     'pages/addTweetOnPage',
     async (addTweetOnPageParams: AddTweetOnPageParams, thunkAPI) => {
-        console.log('Add tweet', addTweetOnPageParams);
         const pagesState = (thunkAPI.getState() as RootState).pages;
         const foundPage = pagesState.allPages.find((page) => page.pageNumber === addTweetOnPageParams.pageNumber);
         if (!foundPage) {
@@ -59,7 +56,6 @@ export interface RemoveTweetFromPageParams {
 export const removeTweetFromPage = createAsyncThunk(
     'pages/removeTweetFromPage',
     async (removeTweetFromPageParams: RemoveTweetFromPageParams, thunkAPI) => {
-        console.log('Remove tweet', removeTweetFromPageParams);
         const pagesState = (thunkAPI.getState() as RootState).pages;
 
         const foundPage = pagesState.allPages.find((page) => page.pageNumber === removeTweetFromPageParams.pageNumber);
@@ -138,7 +134,6 @@ export const pagesSlice = createSlice({
             // Apply the async data to the static pages
             //
             if (action.payload !== null) {
-                console.log('Add Tweet fulfilled', action.payload.newTweetsOnPage);
                 const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
                 if (foundPage) {
                     foundPage.tweets = action.payload.newTweetsOnPage;
@@ -154,7 +149,6 @@ export const pagesSlice = createSlice({
             // Apply the async data to the static pages
             //
             if (action.payload !== null) {
-                console.log('Remove fulfilled', action.payload?.remainingTweetsOnPage);
                 const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
                 if (foundPage) {
                     foundPage.tweets = action.payload.remainingTweetsOnPage;
