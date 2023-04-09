@@ -3,6 +3,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { PageType, TweetType } from '../story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
+import PageTweets from './PageTweets';
 import SlideUpModal from './SlideUpModal';
 import { usePlayAudio } from './usePlayAudio';
 import ViewSounds from './ViewSounds';
@@ -57,20 +58,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
 
                 {audioComplete && (
                     <>
-                        {pageTweets.length > 0 && (
-                            <View
-                                style={{
-                                    flex: 1,
-                                    flexDirection: 'column',
-                                    position: 'absolute',
-                                    alignItems: 'center',
-                                    left: 20,
-                                    bottom: 150
-                                }}
-                            >
-                                <ViewSounds pageNumber={page.pageNumber} availableTweets={pageTweets} usedTweets={[]} />
-                            </View>
-                        )}
+                        {pageTweets.length > 0 && <PageTweets pageNumber={page.pageNumber} tweets={pageTweets} />}
                         <NavigationPanel
                             onNext={onNext}
                             onPrevious={onPrevious}
