@@ -4,7 +4,11 @@ import { PageActivity, PageType, StoryType, TweetOnPageType, TweetType } from '.
 import { RootState } from '.';
 import { Story } from '../../story';
 
-export const fetchPages = createAsyncThunk('pages/fetchPages', async (_notUsed, thunkAPI) => {
+//
+// Fetch page activities from Async storage
+// The success handler will load the static data and apply the page activities to the page
+//
+export const loadStory = createAsyncThunk('pages/loadStory', async (_notUsed, thunkAPI) => {
     const keys = await AsyncStorage.getAllKeys();
     const pagesActivities: PageActivity[] = [];
     if (!keys || keys.length === 0) {
@@ -14,7 +18,7 @@ export const fetchPages = createAsyncThunk('pages/fetchPages', async (_notUsed, 
     const pageActivitiesResults: (string | null)[] = await Promise.all(
         keys.map(async (key) => AsyncStorage.getItem(key))
     );
-    pageActivitiesResults.map((result, index) => {
+    pageActivitiesResults.map((result) => {
         if (result !== null) {
             pagesActivities.push({ ...JSON.parse(result) });
         }
@@ -23,6 +27,9 @@ export const fetchPages = createAsyncThunk('pages/fetchPages', async (_notUsed, 
     return pagesActivities;
 });
 
+//
+// Add a Tweet to a Page
+//
 export interface AddTweetOnPageParams {
     pageNumber: number;
     tweetOnPage: TweetOnPageType;
@@ -48,6 +55,9 @@ export const addTweetOnPage = createAsyncThunk(
     }
 );
 
+//
+// Remove a Tweet from a page
+//
 export interface RemoveTweetFromPageParams {
     pageNumber: number;
     tweetIdToRemove: number;
@@ -83,6 +93,9 @@ export const removeTweetFromPage = createAsyncThunk(
     }
 );
 
+// 
+// The State
+//
 interface PagesState {
     allPages: PageType[];
     availableTweets: TweetType[];
@@ -104,16 +117,15 @@ export const pagesSlice = createSlice({
     reducers: {},
 
     extraReducers: (builder) => {
-        builder.addCase(fetchPages.fulfilled, (state, action) => {
-            //
+        //
+        // Load the story
+        //
+        builder.addCase(loadStory.fulfilled, (state, action) => {
             // Load static pages
-            //
             state.allPages = Story.pages;
             state.availableTweets = Story.availableTweets;
 
-            //
             // Apply the async data to the static pages
-            //
             action.payload.forEach((pageActivity) => {
                 const foundPage = state.allPages.find((allPage) => allPage.pageNumber === pageActivity.pageNumber);
                 if (foundPage) {
@@ -125,14 +137,15 @@ export const pagesSlice = createSlice({
             state.loading = 'succeeded';
         });
 
-        builder.addCase(fetchPages.pending, (state, action) => {
+        builder.addCase(loadStory.pending, (state, action) => {
             state.loading = 'pending';
         });
 
+        //
+        // Add a Tweet
+        //
         builder.addCase(addTweetOnPage.fulfilled, (state, action) => {
-            //
             // Apply the async data to the static pages
-            //
             if (action.payload !== null) {
                 const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
                 if (foundPage) {
@@ -144,10 +157,11 @@ export const pagesSlice = createSlice({
             state.loading = 'succeeded';
         });
 
+        //
+        // Remove a Tweet
+        //
         builder.addCase(removeTweetFromPage.fulfilled, (state, action) => {
-            //
             // Apply the async data to the static pages
-            //
             if (action.payload !== null) {
                 const foundPage = state.allPages.find((page) => page.pageNumber === action.payload?.pageNumber);
                 if (foundPage) {

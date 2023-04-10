@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { PageType, TweetType } from '../story.types';
 import Page from './Page';
 import { Story } from '../story';
-import { fetchPages, getAvailableTweets } from '../src/store/pagesSlice';
+import { loadStory, getAvailableTweets } from '../src/store/pagesSlice';
 import { useAppSelector, useAppDispatch } from '../src/hooks';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -16,7 +16,7 @@ const Pages: React.FunctionComponent = () => {
      * On startup: load saved Cards
      */
     useEffect(() => {
-        dispatch(fetchPages());
+        dispatch(loadStory());
     }, []);
 
     const onPreviousPage = () => {
