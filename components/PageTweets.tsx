@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { TweetType } from '../story.types';
-import DisplayTweet from './DisplayTweet';
+import NoDragDropDisplayTweet from './NoDragDropDisplayTweet';
 
 type PageTweetsProps = {
     pageNumber: number;
@@ -20,7 +20,7 @@ const PageTweets: React.FunctionComponent<PageTweetsProps> = ({ pageNumber, twee
             }}
         >
             {tweets.map((tweet) => (
-                <DisplayTweet key={tweet.id} pageNumber={pageNumber} details={tweet} />
+                <NoDragDropDisplayTweet key={tweet.id} pageNumber={pageNumber} details={tweet} />
             ))}
         </View>
     );
