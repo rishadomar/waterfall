@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
-import { PageType, TweetType } from '../story.types';
+import { PageType, TweetType } from '../../story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
 import PageTweets from './PageTweets';
@@ -16,7 +16,13 @@ type PageProps = {
     availableTweets: TweetType[];
 };
 
-const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
+const Page: React.FunctionComponent<PageProps> = ({
+    page,
+    onNext,
+    onPrevious,
+    onReturnToStart,
+    availableTweets,
+}) => {
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(undefined);
     const [viewSounds, setViewSounds] = useState<boolean>(false);
     const [playAudio] = usePlayAudio((active) => setAudioComplete(active));
@@ -42,7 +48,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
         <View style={styles.container}>
             <ImageBackground
                 source={page.image}
-                resizeMode='cover'
+                resizeMode="cover"
                 style={styles.image}
                 imageStyle={{ borderRadius: 18 }}
             >
@@ -58,7 +64,9 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
 
                 {audioComplete && (
                     <>
-                        {pageTweets.length > 0 && <PageTweets pageNumber={page.pageNumber} tweets={pageTweets} />}
+                        {pageTweets.length > 0 && (
+                            <PageTweets pageNumber={page.pageNumber} tweets={pageTweets} />
+                        )}
                         <NavigationPanel
                             onNext={onNext}
                             onPrevious={onPrevious}
@@ -80,19 +88,19 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     image: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     text: {
         textAlign: 'center',
         color: 'white',
         fontSize: 34,
         fontWeight: 'bold',
-        margin: 10
-    }
+        margin: 10,
+    },
 });
 
 export default Page;

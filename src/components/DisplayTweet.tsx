@@ -1,10 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { Animated, PanResponder, Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
-import { TweetType } from '../story.types';
+import {
+    Animated,
+    PanResponder,
+    Image,
+    StyleSheet,
+    View,
+    TouchableWithoutFeedback,
+} from 'react-native';
+import { TweetType } from '../../story.types';
 import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
-import { useAppSelector, useAppDispatch } from '../src/hooks';
-import { addTweetOnPage, removeTweetFromPage } from '../src/store/pagesSlice';
+import { useAppSelector, useAppDispatch } from '../hooks';
+import { addTweetOnPage, removeTweetFromPage } from '../store/pagesSlice';
 
 type AnimatedTweetProps = {
     details: TweetType;
@@ -19,28 +26,33 @@ const AnimatedTweet: React.FunctionComponent<AnimatedTweetProps> = ({
     onPress,
     playingAudio,
     onMoveTweet,
-    onLongPress
+    onLongPress,
 }) => {
     const pan = useRef(new Animated.ValueXY()).current;
     const panResponder = useRef(
         PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
-            onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false }),
+            onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
+                useNativeDriver: false,
+            }),
             onPanResponderRelease: (e, { dx, dy }) => {
                 pan.extractOffset();
                 onMoveTweet(dx, dy);
-            }
+            },
         })
     ).current;
 
     return (
         <Animated.View
             style={{
-                transform: [{ translateX: pan.x }, { translateY: pan.y }]
+                transform: [{ translateX: pan.x }, { translateY: pan.y }],
             }}
             {...panResponder.panHandlers}
         >
-            <TouchableWithoutFeedback onPress={() => onPress(details)} onLongPress={() => onLongPress(details)}>
+            <TouchableWithoutFeedback
+                onPress={() => onPress(details)}
+                onLongPress={() => onLongPress(details)}
+            >
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={details.image} />
                 </View>
@@ -74,7 +86,12 @@ const DisplayTweet: React.FunctionComponent<TweetProps> = ({ pageNumber, details
                 onPress={(tweet) => playTweet(tweet)}
                 playingAudio={playingAudio}
                 onMoveTweet={() => {
-                    dispatch(addTweetOnPage({ pageNumber, tweetOnPage: { tweetId: details.id, x: 0, y: 0 } }));
+                    dispatch(
+                        addTweetOnPage({
+                            pageNumber,
+                            tweetOnPage: { tweetId: details.id, x: 0, y: 0 },
+                        })
+                    );
                 }}
                 onLongPress={() => {
                     dispatch(removeTweetFromPage({ pageNumber, tweetIdToRemove: details.id }));
@@ -89,14 +106,14 @@ export default DisplayTweet;
 const styles = StyleSheet.create({
     imageContainer: {
         borderRadius: 35,
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
     image: {
         width: 70,
-        height: 70
+        height: 70,
     },
     playingImage: {
         width: 100,
-        height: 100
-    }
+        height: 100,
+    },
 });

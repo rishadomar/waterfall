@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView } from 'react-native';
 import Pages from './components/Pages';
 import { StatusBar } from 'expo-status-bar';
-import { store } from './src/store';
+import { store } from './store';
 import { Provider } from 'react-redux';
 
 export default function App() {

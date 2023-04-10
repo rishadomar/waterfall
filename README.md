@@ -34,10 +34,11 @@ eas build -p android --profile apk
 # Next steps:
 NEXT AIM:
 * If no tweets available, then say so
-* when tweet added to page, add to loaded list
-
-
-
+* Progress circle
+* End page
+* Start page with index of all stories
+* Install prettier and eslint
+* cleaning up code
 
 State:
     loadedPages: could be empty or just a few entries
@@ -45,6 +46,10 @@ State:
     availableTweets: from story and loaded pages merged
 
 
+Try:
+remove.bg
+Adobe online tool to remove bg in an image
+make color pallete: ionicframework.com/docs/theming/color-generator
 
 
 

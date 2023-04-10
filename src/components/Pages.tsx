@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { PageType, TweetType } from '../story.types';
+import { PageType, TweetType } from '../../story.types';
 import Page from './Page';
-import { Story } from '../story';
-import { loadStory, getAvailableTweets } from '../src/store/pagesSlice';
-import { useAppSelector, useAppDispatch } from '../src/hooks';
+import { Story } from '../../story';
+import { loadStory, getAvailableTweets } from '../store/pagesSlice';
+import { useAppSelector, useAppDispatch } from '../hooks';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Pages: React.FunctionComponent = () => {
@@ -43,7 +43,13 @@ const Pages: React.FunctionComponent = () => {
 
     const page = allPages.find((allPage) => allPage.pageNumber === currentPageNumber);
     if (!page) {
-        return <Spinner visible={true} textContent={'Error loading...'} textStyle={{ color: '#FFF' }} />;
+        return (
+            <Spinner
+                visible={true}
+                textContent={'Error loading...'}
+                textStyle={{ color: '#FFF' }}
+            />
+        );
     }
 
     return (

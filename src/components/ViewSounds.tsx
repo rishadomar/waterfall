@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { TweetOnPageType, TweetType } from '../story.types';
+import { TweetOnPageType, TweetType } from '../../story.types';
 import DisplayTweet from './DisplayTweet';
 import Grid from './Grid';
 
@@ -10,10 +10,16 @@ type ViewSoundsProps = {
     usedTweets: TweetOnPageType[];
 };
 
-const ViewSounds: React.FunctionComponent<ViewSoundsProps> = ({ pageNumber, availableTweets, usedTweets }) => {
+const ViewSounds: React.FunctionComponent<ViewSoundsProps> = ({
+    pageNumber,
+    availableTweets,
+    usedTweets,
+}) => {
     const [tweetsToDisplay, setTweetsToDisplay] = useState<TweetType[]>([]);
 
-    const renderTweet = (item: TweetType) => <DisplayTweet pageNumber={pageNumber} details={item} />;
+    const renderTweet = (item: TweetType) => (
+        <DisplayTweet pageNumber={pageNumber} details={item} />
+    );
 
     useEffect(() => {
         const tweetsToDisplay = availableTweets.filter((a) => {
