@@ -20,7 +20,7 @@ export const loadStory = createAsyncThunk('pages/loadStory', async (_notUsed, th
     );
     pageActivitiesResults.map((result) => {
         if (result !== null) {
-            pagesActivities.push({ ...JSON.parse(result) });
+            pagesActivities.push(JSON.parse(result));
         }
     });
 
@@ -47,11 +47,11 @@ export const addTweetOnPage = createAsyncThunk(
 
         const pageActivity: PageActivity = {
             pageNumber: addTweetOnPageParams.pageNumber,
-            tweetsOnPage: [...newTweetsOnPage]
+            tweetsOnPage: newTweetsOnPage
         };
         await AsyncStorage.mergeItem(addTweetOnPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
 
-        return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage: [...newTweetsOnPage] };
+        return { pageNumber: addTweetOnPageParams.pageNumber, newTweetsOnPage };
     }
 );
 
@@ -81,14 +81,14 @@ export const removeTweetFromPage = createAsyncThunk(
         });
         const pageActivity: PageActivity = {
             pageNumber: removeTweetFromPageParams.pageNumber,
-            tweetsOnPage: [...remainingTweetsOnPage]
+            tweetsOnPage: remainingTweetsOnPage
         };
 
         await AsyncStorage.mergeItem(removeTweetFromPageParams.pageNumber.toString(), JSON.stringify(pageActivity));
 
         return {
             pageNumber: removeTweetFromPageParams.pageNumber,
-            remainingTweetsOnPage: [...remainingTweetsOnPage]
+            remainingTweetsOnPage
         };
     }
 );
