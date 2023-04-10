@@ -1,8 +1,8 @@
 import { StyleSheet, SafeAreaView } from 'react-native';
-import Pages from './components/Pages';
 import { StatusBar } from 'expo-status-bar';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import Pages from 'components/Pages';
 
 export default function App() {
     return (
@@ -10,7 +10,7 @@ export default function App() {
             <Provider store={store}>
                 <Pages />
             </Provider>
-            <StatusBar style='auto' />
+            <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
@@ -18,6 +18,6 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000000' //'#25292e',
-    }
+        backgroundColor: '#000000', //'#25292e',
+    },
 });

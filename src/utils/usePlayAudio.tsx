@@ -1,7 +1,9 @@
 import { Audio, AVPlaybackSource, AVPlaybackStatus } from 'expo-av';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export const usePlayAudio = (onEndOfPlay: (active: boolean) => void): [(audio: AVPlaybackSource) => void] => {
+export const usePlayAudio = (
+    onEndOfPlay: (active: boolean) => void
+): [(audio: AVPlaybackSource) => void] => {
     const [playingSound, setPlayingSound] = useState<Audio.Sound | null>(null);
 
     const onPlaybackStatusUpdate = (playbackStatus: AVPlaybackStatus) => {
@@ -35,7 +37,7 @@ export const usePlayAudio = (onEndOfPlay: (active: boolean) => void): [(audio: A
     const play = async (audio: AVPlaybackSource) => {
         try {
             const { sound } = await Audio.Sound.createAsync(audio, {
-                shouldPlay: true
+                shouldPlay: true,
             });
             setPlayingSound(sound);
             sound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);

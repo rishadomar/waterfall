@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
-import { PageType, TweetType } from '../../story.types';
+import { PageType, TweetType } from 'story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
 import PageTweets from './PageTweets';
 import SlideUpModal from './SlideUpModal';
-import { usePlayAudio } from './usePlayAudio';
+import { usePlayAudio } from 'utils/usePlayAudio';
 import ViewSounds from './ViewSounds';
 
 type PageProps = {

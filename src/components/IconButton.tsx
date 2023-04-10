@@ -1,5 +1,4 @@
-import { Pressable, StyleSheet, Text, Dimensions } from 'react-native';
-//import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PropsWithChildren } from 'react';
 
@@ -10,10 +9,15 @@ interface IconButtonProps extends PropsWithChildren<any> {
     size?: number;
 }
 
-const IconButton: React.FunctionComponent<IconButtonProps> = ({ icon, label, onPress, size = 80 }) => {
+const IconButton: React.FunctionComponent<IconButtonProps> = ({
+    icon,
+    label,
+    onPress,
+    size = 80,
+}) => {
     return (
         <Pressable style={[styles.iconButton, { height: size, width: size }]} onPress={onPress}>
-            <MaterialCommunityIcons name={icon} size={size} color='white' />
+            <MaterialCommunityIcons name={icon} size={size} color="white" />
             {label && <Text style={styles.iconButtonLabel}>{label}</Text>}
         </Pressable>
     );
@@ -28,17 +32,17 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         backgroundColor: 'black',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     iconButton: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'black',
         marginVertical: 10,
-        borderRadius: 50
+        borderRadius: 50,
     },
     iconButtonLabel: {
         color: '#fff',
-        marginTop: 12
-    }
+        marginTop: 12,
+    },
 });

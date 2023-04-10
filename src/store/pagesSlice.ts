@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PageActivity, PageType, StoryType, TweetOnPageType, TweetType } from '../../story.types';
+import { PageActivity, PageType, StoryType, TweetOnPageType, TweetType } from '../story.types';
 import { RootState } from '.';
-import { Story } from '../../story';
+import { Story } from '../../assets/story';
 
 //
 // Fetch page activities from Async storage
