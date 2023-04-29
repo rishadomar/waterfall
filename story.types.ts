@@ -5,7 +5,7 @@ export interface PageType {
     text: string;
     image: ImageSourcePropType;
     audio: any;
-    tweets: TweetOnPageType[];
+    tweets: Number[];
 }
 
 export interface TweetType {

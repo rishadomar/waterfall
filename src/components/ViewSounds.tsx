@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { TweetOnPageType, TweetType } from '../story.types';
+import { TweetOnPageType, TweetType } from '../../story.types';
 import DisplayTweet from './DisplayTweet';
 import Grid from './Grid';
 

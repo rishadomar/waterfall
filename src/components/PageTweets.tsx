@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { TweetType } from '../story.types';
+import { TweetType } from '../../story.types';
 import NoDragDropDisplayTweet from './NoDragDropDisplayTweet';
 
 type PageTweetsProps = {

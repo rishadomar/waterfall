@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { Animated, PanResponder, Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
-import { TweetType } from '../story.types';
+import { TweetType } from '../../story.types';
 import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
-import { useAppSelector, useAppDispatch } from '../src/hooks';
-import { addTweetOnPage, removeTweetFromPage } from '../src/store/pagesSlice';
+import { useAppSelector, useAppDispatch } from '../hooks';
+import { addTweetOnPage, removeTweetFromPage } from '../store/pagesSlice';
 
 type AnimatedTweetProps = {
     details: TweetType;

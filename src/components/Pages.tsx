@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import Page from './Page';
-import { loadStory } from '../src/store/pagesSlice';
-import { useAppSelector, useAppDispatch } from '../src/hooks';
+import { loadStory } from '../store/pagesSlice';
+import { useAppSelector, useAppDispatch } from '../hooks';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Pages: React.FunctionComponent = () => {

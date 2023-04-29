@@ -38,8 +38,8 @@ eas build -p android --profile apk
 
 # Next steps:
 NEXT AIM:
-* If no tweets available, then say so
-* when tweet added to page, add to loaded list
+* Stop a sound when moving on to next page
+
 
 
 

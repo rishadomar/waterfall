@@ -32,21 +32,21 @@ export const Story: StoryType = {
             text: 'Find the path to the start of the waterfall',
             image: require('./assets/pages/pathToTheForest.png'),
             audio: require('./assets/pages/1.mp3'),
-            tweets: []
+            tweets: [1]
         },
         {
             pageNumber: 2,
             text: 'We walk up, up and up climbing the steps one by one',
             image: require('./assets/pages/steps.png'),
             audio: require('./assets/pages/2.mp3'),
-            tweets: []
+            tweets: [2]
         },
         {
             pageNumber: 3,
             text: 'Climb over a fallen tree',
             image: require('./assets/pages/A_forest_path_with_a_fallen_tree_across_the_path.png'),
             audio: require('./assets/pages/3.mp3'),
-            tweets: []
+            tweets: [1, 2]
             // A forest path with a fallen tree across the path Canon EF 50mm f/1.8 STM lens, hyperrealistic --ar 4:5 --seed 786
         },
         {
@@ -54,7 +54,7 @@ export const Story: StoryType = {
             text: "Listen to the forest birds singing. I hear them but I don't see them",
             image: require('./assets/pages/beatiful_forest_with_trees_and_some_sunlight_shining.png'),
             audio: require('./assets/pages/4.mp3'),
-            tweets: []
+            tweets: [3]
             // a beatiful forest with trees and some sunlight shining through :: Canon EF 50mm f/1.8 STM lens, hyperrealistic --ar 4:5 --seed 786
         },
         {

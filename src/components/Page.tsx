@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground, useWindowDimensions } from 'react-native';
-import { PageType, TweetType } from '../story.types';
+import { PageType, TweetType } from '../../story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
 import PageTweets from './PageTweets';
@@ -9,6 +9,7 @@ import { usePlayAudio } from './usePlayAudio';
 import ViewSounds from './ViewSounds';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
+import PlayTweet from './PlayTweet';
 
 type PageProps = {
     page: PageType;
@@ -81,6 +82,9 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                         imageStyle={{ borderRadius: 18 }}
                     >
                         <PageText text={page.text} />
+                        {audioComplete && page.tweets.length > 0 && (
+                            <PlayTweet availableTweets={availableTweets} tweetId={page.tweets[0]} />
+                        )}
                     </ImageBackground>
                 </Animated.View>
             </PanGestureHandler>

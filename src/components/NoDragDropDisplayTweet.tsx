@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
-import { TweetType } from '../story.types';
+import { TweetType } from '../../story.types';
 import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
-import { useAppDispatch } from '../src/hooks';
-import { removeTweetFromPage } from '../src/store/pagesSlice';
+import { useAppDispatch } from '../hooks';
+import { removeTweetFromPage } from '../store/pagesSlice';
 
 type NoDragDropDisplayTweetProps = {
     pageNumber: number;
