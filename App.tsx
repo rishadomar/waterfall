@@ -3,15 +3,16 @@ import Pages from './components/Pages';
 import { StatusBar } from 'expo-status-bar';
 import { store } from './src/store';
 import { Provider } from 'react-redux';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
     return (
-        <SafeAreaView style={styles.container}>
+        <GestureHandlerRootView style={styles.container}>
             <Provider store={store}>
                 <Pages />
             </Provider>
             <StatusBar style='auto' />
-        </SafeAreaView>
+        </GestureHandlerRootView>
     );
 }
 

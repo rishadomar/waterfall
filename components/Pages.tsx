@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { PageType, TweetType } from '../story.types';
 import Page from './Page';
-import { Story } from '../story';
-import { loadStory, getAvailableTweets } from '../src/store/pagesSlice';
+import { loadStory } from '../src/store/pagesSlice';
 import { useAppSelector, useAppDispatch } from '../src/hooks';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -49,9 +47,9 @@ const Pages: React.FunctionComponent = () => {
     return (
         <Page
             page={page}
-            onNext={currentPageNumber < allPages.length ? onNextPage : null}
-            onPrevious={currentPageNumber > 1 ? onPreviousPage : null}
-            onReturnToStart={currentPageNumber === allPages.length ? onReturnToStart : null}
+            onNext={onNextPage}
+            onPrevious={onPreviousPage}
+            onReturnToStart={onReturnToStart}
             availableTweets={availableTweets}
         />
     );

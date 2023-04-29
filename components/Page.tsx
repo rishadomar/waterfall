@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View, ImageBackground } from 'react-native';
+import { StyleSheet, View, ImageBackground, useWindowDimensions } from 'react-native';
 import { PageType, TweetType } from '../story.types';
 import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
@@ -7,6 +7,8 @@ import PageTweets from './PageTweets';
 import SlideUpModal from './SlideUpModal';
 import { usePlayAudio } from './usePlayAudio';
 import ViewSounds from './ViewSounds';
+import Animated from 'react-native-reanimated';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
 type PageProps = {
     page: PageType;
@@ -21,6 +23,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
     const [viewSounds, setViewSounds] = useState<boolean>(false);
     const [playAudio] = usePlayAudio((active) => setAudioComplete(active));
     const [pageTweets, setPageTweets] = useState<TweetType[]>([]);
+    const { width } = useWindowDimensions();
 
     useEffect(() => {
         setAudioComplete(false);
@@ -40,40 +43,47 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
 
     return (
         <View style={styles.container}>
-            <ImageBackground
-                source={page.image}
-                resizeMode='cover'
-                style={styles.image}
-                imageStyle={{ borderRadius: 18 }}
+            <PanGestureHandler
+                onEnded={(e: any) => {
+                    if (e.nativeEvent.translationX < -(width / 3) || e.nativeEvent.velocityX < -1000) {
+                        console.log('swipe left', e.nativeEvent, width);
+                        onNext();
+                    } else if (e.nativeEvent.translationX > width / 3 || e.nativeEvent.velocityX > 1000) {
+                        console.log('swipe right', e.nativeEvent);
+                        onPrevious();
+                    }
+                }}
+
+                // onGestureEvent={(e) => {
+                //     if (e.nativeEvent.translationX < -(width / 3) || e.nativeEvent.velocityX < -1000) {
+                //         console.log('swipe left', e, e.nativeEvent, width, e.eventName);
+                //         //onNext();
+                //     } else if (e.nativeEvent.translationX > width / 3 || e.nativeEvent.velocityX > 1000) {
+                //         console.log('swipe right', e.nativeEvent);
+                //         //onPrevious();
+                //     }
+                // }}
             >
-                {viewSounds && (
-                    <SlideUpModal onClose={() => setViewSounds(false)}>
-                        <ViewSounds
-                            pageNumber={page.pageNumber}
-                            availableTweets={availableTweets}
-                            usedTweets={page.tweets}
-                        />
-                    </SlideUpModal>
-                )}
-
-                {audioComplete && (
-                    <>
-                        {pageTweets.length > 0 && <PageTweets pageNumber={page.pageNumber} tweets={pageTweets} />}
-                        <NavigationPanel
-                            onNext={onNext}
-                            onPrevious={onPrevious}
-                            onReturnToStart={onReturnToStart}
-                            onReplay={() => {
-                                setAudioComplete(false);
-                                playAudio(page.audio);
-                            }}
-                            onOpenSounds={() => setViewSounds(true)}
-                        />
-                    </>
-                )}
-
-                {!viewSounds && !audioComplete && <PageText text={page.text} />}
-            </ImageBackground>
+                <Animated.View
+                    style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        //backgroundColor: 'red',
+                        top: 0,
+                        right: 0
+                    }}
+                >
+                    <ImageBackground
+                        source={page.image}
+                        resizeMode='cover'
+                        style={styles.image}
+                        imageStyle={{ borderRadius: 18 }}
+                    >
+                        <PageText text={page.text} />
+                    </ImageBackground>
+                </Animated.View>
+            </PanGestureHandler>
         </View>
     );
 };

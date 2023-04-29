@@ -1,6 +1,10 @@
+nvm use 16.13.0
+npm install -g yarn
+npm install -g expo-cli
+npm install -g eas-cli
+
 yarn
 yarn start
-nvm use 16.13.0
 
 Refs:
 https://online-voice-recorder.com/
@@ -28,6 +32,7 @@ fade image: https://snack.expo.dev/@spencercarli/fade-in-an-image-with-react-nat
 # Deploy an APK
 
 See eas.json
+eas login
 eas build -p android --profile apk
 
 
