@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import { TweetType } from '../../story.types';
-import RedDot from './RedDot';
 import { usePlayAudio } from './usePlayAudio';
 import { useAppDispatch } from '../hooks';
-import { getAvailableTweets, removeTweetFromPage } from '../store/pagesSlice';
 
 type PlayTweetProps = {
     availableTweets: TweetType[];

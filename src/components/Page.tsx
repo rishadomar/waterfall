@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground, useWindowDimensions } from 'react-native';
 import { PageType, TweetType } from '../../story.types';
-import NavigationPanel from './NavigationPanel';
 import PageText from './PageText';
-import PageTweets from './PageTweets';
-import SlideUpModal from './SlideUpModal';
 import { usePlayAudio } from './usePlayAudio';
-import ViewSounds from './ViewSounds';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import PlayTweet from './PlayTweet';
@@ -34,7 +30,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
     useEffect(() => {
         const foundTweets: TweetType[] = [];
         page.tweets.forEach((pt) => {
-            const foundTweet = availableTweets.find((at) => at.id === pt.tweetId);
+            const foundTweet = availableTweets.find((at) => at.id === pt);
             if (foundTweet) {
                 foundTweets.push(foundTweet);
             }

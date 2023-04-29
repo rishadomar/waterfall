@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import Page from './Page';
-import { loadStory } from '../store/pagesSlice';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-const Pages: React.FunctionComponent = () => {
+interface PagesProps {
+    storyId: number;
+}
+
+const Pages: React.FunctionComponent<PagesProps> = ({ storyId }) => {
     const { allPages, availableTweets, loading } = useAppSelector((state) => state.pages);
     const dispatch = useAppDispatch();
+    const [currentStory, setCurrentStory] = useState<number | null>(null);
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
-    /**
-     * On startup: load saved Cards
-     */
     useEffect(() => {
-        dispatch(loadStory());
-    }, []);
+        setCurrentStory(storyId);
+        dispatch({ type: 'pages/loadStory', payload: { storyId } });
+    }, [storyId]);
 
     const onPreviousPage = () => {
         if (currentPageNumber === 1) {
