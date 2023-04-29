@@ -17,7 +17,7 @@ const Compendium: React.FunctionComponent = () => {
         );
     }
 
-    return <Pages storyId={currentStory} />;
+    return <Pages storyId={currentStory} onReturnToIndex={() => setCurrentStory(null)} />;
 };
 
 const styles = StyleSheet.create({});
