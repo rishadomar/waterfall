@@ -39,6 +39,10 @@ eas build -p android --profile apk
 # Next steps:
 NEXT AIM:
 * Stop a sound when moving on to next page
+* Style storycard
+* style EndPage
+* Add a next story
+* Add more sounds
 
 
 
