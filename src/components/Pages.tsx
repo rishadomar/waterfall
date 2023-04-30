@@ -24,6 +24,7 @@ const Pages: React.FunctionComponent<PagesProps> = ({ storyId, onReturnToIndex }
 
     const onPreviousPage = () => {
         if (currentPageNumber === 1) {
+            onReturnToIndex();
             return;
         }
         setCurrentPageNumber((currentPage) => --currentPage);

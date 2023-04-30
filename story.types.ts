@@ -1,3 +1,4 @@
+import { AVPlaybackSource } from 'expo-av';
 import { ImageSourcePropType } from 'react-native/types';
 
 export interface CompendiumType {
@@ -13,11 +14,15 @@ export interface StoryType {
     pages: PageType[];
 }
 
+export interface TextType {
+    line: string;
+    audio: AVPlaybackSource;
+}
+
 export interface PageType {
     pageNumber: number;
-    text: string;
+    text: TextType[];
     image: ImageSourcePropType;
-    audio: any;
     tweets: Number[];
 }
 

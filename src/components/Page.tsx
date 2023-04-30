@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground, useWindowDimensions } from 'react-native';
 import { PageType, TweetType } from '../../story.types';
 import PageText from './PageText';
-import { usePlayAudio } from './usePlayAudio';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import PlayTweet from './PlayTweet';
@@ -17,15 +16,7 @@ type PageProps = {
 
 const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(false);
-    const [playAudio] = usePlayAudio((active) => {
-        setAudioComplete(active);
-    });
     const { width } = useWindowDimensions();
-
-    useEffect(() => {
-        setAudioComplete(false);
-        setTimeout(() => playAudio(page.audio), 500);
-    }, [page.pageNumber]);
 
     return (
         <View style={styles.container}>
@@ -68,7 +59,7 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                         style={styles.image}
                         imageStyle={{ borderRadius: 18 }}
                     >
-                        <PageText text={page.text} />
+                        <PageText text={page.text} onTextIsDone={() => setAudioComplete(true)} />
                         {audioComplete && page.tweets.length > 0 && (
                             <PlayTweet availableTweets={availableTweets} tweetId={page.tweets[0]} />
                         )}

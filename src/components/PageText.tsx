@@ -1,12 +1,48 @@
 import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import { TABLET_HEIGHT_BREAKPOINT } from '../constants';
+import { TextType } from '../../story.types';
+import { useEffect, useState } from 'react';
+import { usePlayAudio } from './usePlayAudio';
 
 type PageTextProps = {
-    text: string;
+    text: TextType[];
+    onTextIsDone: () => void;
 };
 
-const PageText: React.FunctionComponent<PageTextProps> = ({ text }) => {
+const PageText: React.FunctionComponent<PageTextProps> = ({ text, onTextIsDone }) => {
     const { height } = useWindowDimensions();
+    const [lineNumber, setLineNumber] = useState<number>(0);
+    const [playAudio] = usePlayAudio((active) => {
+        if (!active) {
+            return;
+        }
+        setLineNumber((lineNumber) => ++lineNumber);
+    });
+
+    useEffect(() => {
+        setLineNumber(0);
+    }, [text]);
+
+    useEffect(() => {
+        if (lineNumber >= text.length) {
+            onTextIsDone();
+        }
+    }, [lineNumber]);
+
+    useEffect(() => {
+        if (lineNumber >= text.length) {
+            return;
+        }
+        setTimeout(() => playAudio(text[lineNumber].audio), 500);
+    }, [lineNumber]);
+
+    const getLine = () => {
+        if (lineNumber < text.length) {
+            return text[lineNumber].line;
+        } else {
+            return text[text.length - 1].line;
+        }
+    };
 
     return (
         <View
@@ -25,7 +61,7 @@ const PageText: React.FunctionComponent<PageTextProps> = ({ text }) => {
                     }
                 ]}
             >
-                {text}
+                {getLine()}
             </Text>
         </View>
     );
