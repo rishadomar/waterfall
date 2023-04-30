@@ -32,6 +32,14 @@ export const usePlayAudio = (onEndOfPlay: (active: boolean) => void): [(audio: A
         }
     };
 
+    useEffect(() => {
+        return () => {
+            if (playingSound !== null) {
+                playingSound.unloadAsync();
+            }
+        };
+    }, [playingSound]);
+
     const play = async (audio: AVPlaybackSource) => {
         try {
             const { sound } = await Audio.Sound.createAsync(audio, {
