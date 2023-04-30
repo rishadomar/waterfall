@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import { View } from 'react-native';
 import { TweetType } from '../../story.types';
 import { usePlayAudio } from './usePlayAudio';
-import { useAppDispatch } from '../hooks';
+import { AntDesign } from '@expo/vector-icons';
 
 type PlayTweetProps = {
     availableTweets: TweetType[];
@@ -25,7 +25,11 @@ const PlayTweet: React.FunctionComponent<PlayTweetProps> = ({ availableTweets, t
         }
     }, []);
 
-    return <View style={{ margin: 10 }}></View>;
+    return (
+        <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
+            {playingAudio && <AntDesign name={'sound'} size={24} color='aqua' />}
+        </View>
+    );
 };
 
 export default PlayTweet;
