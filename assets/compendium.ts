@@ -5,7 +5,7 @@ export const compendium: CompendiumType = {
         {
             id: 1,
             title: 'Walk to a waterfall',
-            mainImage: null,
+            mainImage: require('./pages/pathToTheForest.png'),
             pageTurnerAudio: require('./pages/pageTurner.wav'),
             availableTweets: [
                 {
@@ -207,7 +207,7 @@ export const compendium: CompendiumType = {
         {
             id: 2,
             title: 'A visit to the beach',
-            mainImage: null,
+            mainImage: require('./pages/A_forest_path_with_a_fallen_tree_across_the_path.png'),
             pageTurnerAudio: require('./pages/pageTurner.wav'),
             availableTweets: [
                 {

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { StoryType } from '../../story.types';
+import { AntDesign } from '@expo/vector-icons';
 
 type EndPageProps = {
     onReturnToIndex: () => void;
@@ -7,19 +7,22 @@ type EndPageProps = {
 
 const EndPage: React.FunctionComponent<EndPageProps> = ({ onReturnToIndex }) => {
     return (
-        <Pressable onPress={onReturnToIndex}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text
                 style={{
                     textAlign: 'center',
                     color: 'white',
                     fontSize: 34,
                     fontWeight: 'bold',
-                    margin: 10
+                    margin: 40
                 }}
             >
                 The End
             </Text>
-        </Pressable>
+            <Pressable onPress={onReturnToIndex}>
+                <AntDesign name='reload1' size={48} color='white' />
+            </Pressable>
+        </View>
     );
 };
 

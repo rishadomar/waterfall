@@ -8,7 +8,7 @@ export interface CompendiumType {
 export interface StoryType {
     id: number;
     title: string;
-    mainImage: ImageSourcePropType | null;
+    mainImage: ImageSourcePropType;
     pageTurnerAudio: any;
     availableTweets: TweetType[];
     pages: PageType[];

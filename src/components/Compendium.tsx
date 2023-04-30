@@ -9,7 +9,7 @@ const Compendium: React.FunctionComponent = () => {
 
     if (currentStory === null) {
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 {compendium.stories.map((story) => (
                     <Story onPress={setCurrentStory} key={story.id} story={story} />
                 ))}
