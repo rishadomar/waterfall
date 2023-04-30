@@ -16,10 +16,10 @@ type PageProps = {
 };
 
 const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
-    const [audioComplete, setAudioComplete] = useState<boolean | undefined>(undefined);
-    const [viewSounds, setViewSounds] = useState<boolean>(false);
-    const [playAudio] = usePlayAudio((active) => setAudioComplete(active));
-    const [pageTweets, setPageTweets] = useState<TweetType[]>([]);
+    const [audioComplete, setAudioComplete] = useState<boolean | undefined>(false);
+    const [playAudio] = usePlayAudio((active) => {
+        setAudioComplete(active);
+    });
     const { width } = useWindowDimensions();
 
     useEffect(() => {
@@ -27,26 +27,17 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
         setTimeout(() => playAudio(page.audio), 500);
     }, [page.pageNumber]);
 
-    useEffect(() => {
-        const foundTweets: TweetType[] = [];
-        page.tweets.forEach((pt) => {
-            const foundTweet = availableTweets.find((at) => at.id === pt);
-            if (foundTweet) {
-                foundTweets.push(foundTweet);
-            }
-        });
-        setPageTweets([...foundTweets]);
-    }, [page.pageNumber, page.tweets]);
-
     return (
         <View style={styles.container}>
             <PanGestureHandler
                 onEnded={(e: any) => {
                     if (e.nativeEvent.translationX < -(width / 3) || e.nativeEvent.velocityX < -1000) {
-                        console.log('swipe left', e.nativeEvent, width);
+                        //console.log('swipe left', e.nativeEvent, width);
+                        setAudioComplete(false);
                         onNext();
                     } else if (e.nativeEvent.translationX > width / 3 || e.nativeEvent.velocityX > 1000) {
-                        console.log('swipe right', e.nativeEvent);
+                        //console.log('swipe right', e.nativeEvent);
+                        setAudioComplete(false);
                         onPrevious();
                     }
                 }}
