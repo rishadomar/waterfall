@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         justifyContent: 'center',
-        height: 600,
         width: '100%',
         borderRadius: 18
     },
