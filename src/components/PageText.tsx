@@ -1,17 +1,19 @@
 import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import { TABLET_HEIGHT_BREAKPOINT } from '../constants';
-import { TextType } from '../../story.types';
+import { LineType } from '../../story.types';
 import { useEffect, useState } from 'react';
 import { usePlayAudio } from './usePlayAudio';
 
 type PageTextProps = {
-    text: TextType[];
+    lines: LineType[];
+    selectedLanguage: string;
     onTextIsDone: () => void;
 };
 
-const PageText: React.FunctionComponent<PageTextProps> = ({ text, onTextIsDone }) => {
+const PageText: React.FunctionComponent<PageTextProps> = ({ lines, onTextIsDone }) => {
     const { height } = useWindowDimensions();
     const [lineNumber, setLineNumber] = useState<number>(0);
+
     const [playAudio] = usePlayAudio((active) => {
         if (!active) {
             return;
@@ -21,26 +23,26 @@ const PageText: React.FunctionComponent<PageTextProps> = ({ text, onTextIsDone }
 
     useEffect(() => {
         setLineNumber(0);
-    }, [text]);
+    }, [lines]);
 
     useEffect(() => {
-        if (lineNumber >= text.length) {
+        if (lineNumber >= lines.length) {
             onTextIsDone();
         }
     }, [lineNumber]);
 
     useEffect(() => {
-        if (lineNumber >= text.length) {
+        if (lineNumber >= lines.length) {
             return;
         }
-        setTimeout(() => playAudio(text[lineNumber].audio), 500);
+        setTimeout(() => playAudio(lines[lineNumber].audio), 500);
     }, [lineNumber]);
 
     const getLine = () => {
-        if (lineNumber < text.length) {
-            return text[lineNumber].line;
+        if (lineNumber < lines.length) {
+            return lines[lineNumber].text;
         } else {
-            return text[text.length - 1].line;
+            return lines[lines.length - 1].text;
         }
     };
 

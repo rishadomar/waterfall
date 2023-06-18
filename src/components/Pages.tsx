@@ -7,10 +7,11 @@ import EndPage from './EndPage';
 
 interface PagesProps {
     storyId: number;
+    selectedLanguage: string;
     onReturnToIndex: () => void;
 }
 
-const Pages: React.FunctionComponent<PagesProps> = ({ storyId, onReturnToIndex }) => {
+const Pages: React.FunctionComponent<PagesProps> = ({ storyId, selectedLanguage, onReturnToIndex }) => {
     const { allPages, availableTweets, loading } = useAppSelector((state) => state.pages);
     const dispatch = useAppDispatch();
     const [currentStory, setCurrentStory] = useState<number | null>(null);
@@ -58,6 +59,7 @@ const Pages: React.FunctionComponent<PagesProps> = ({ storyId, onReturnToIndex }
     return (
         <Page
             page={page}
+            selectedLanguage={selectedLanguage}
             onNext={onNextPage}
             onPrevious={onPreviousPage}
             onReturnToStart={onReturnToStart}

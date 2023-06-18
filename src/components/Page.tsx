@@ -8,13 +8,21 @@ import PlayTweet from './PlayTweet';
 
 type PageProps = {
     page: PageType;
+    selectedLanguage: string;
     onNext: any;
     onPrevious: any;
     onReturnToStart: any;
     availableTweets: TweetType[];
 };
 
-const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, onReturnToStart, availableTweets }) => {
+const Page: React.FunctionComponent<PageProps> = ({
+    page,
+    selectedLanguage,
+    onNext,
+    onPrevious,
+    onReturnToStart,
+    availableTweets
+}) => {
     const [audioComplete, setAudioComplete] = useState<boolean | undefined>(false);
     const { width } = useWindowDimensions();
 
@@ -59,7 +67,11 @@ const Page: React.FunctionComponent<PageProps> = ({ page, onNext, onPrevious, on
                         style={styles.image}
                         imageStyle={{ borderRadius: 18 }}
                     >
-                        <PageText text={page.text} onTextIsDone={() => setAudioComplete(true)} />
+                        <PageText
+                            lines={page.content.find((content) => content.language === selectedLanguage)?.lines || []}
+                            selectedLanguage={selectedLanguage}
+                            onTextIsDone={() => setAudioComplete(true)}
+                        />
                         {audioComplete && page.tweets.length > 0 && (
                             <PlayTweet availableTweets={availableTweets} tweetId={page.tweets[0]} />
                         )}

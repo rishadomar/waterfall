@@ -6,6 +6,8 @@ npm install -g eas-cli
 yarn
 yarn start
 
+https://github.com/AdelRedaa97/react-native-select-dropdown
+
 Refs:
 https://online-voice-recorder.com/
 

@@ -5502,6 +5502,11 @@ react-native-loading-spinner-overlay@^3.0.1:
   resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-3.0.1.tgz#092481b8cce157d3af5ef942f845ad981f96bd36"
   integrity sha512-4GdR54HQnKg2HPSSisVizfTLuyhSh4splY9eb8mKiYF1Ihjn/5EmdNo5bN3S7uKPFRC3WLzIZIouX6G6fXfnjw==
 
+react-native-radio-buttons-group@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-radio-buttons-group/-/react-native-radio-buttons-group-3.0.2.tgz#9016a739819030cbf58a563b2487fac46a711f02"
+  integrity sha512-5Nszk4WJGO4MeL+/4TSQRGoQErZlAaj5zAb4tis5f2J+O1tGzCMRtIARqr0WlIKwsjzH6zmcgyr9Q2Vv5xMiPw==
+
 react-native-reanimated@~2.14.4:
   version "2.14.4"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.14.4.tgz#3fa3da4e7b99f5dfb28f86bcf24d9d1024d38836"
