@@ -9,8 +9,8 @@ interface Language {
 
 interface LanguageSelectorProps {
     languages: Language[];
-    currentLanguage: string;
-    setCurrentLanguage: (languageCode: string) => void;
+    currentLanguage: Language;
+    setCurrentLanguage: (language: Language) => void;
 }
 
 const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguage, setCurrentLanguage }) => {
@@ -28,19 +28,27 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguag
     //     };
     // }, [languages]);
 
+    console.log('RadioButtons', radioButtons, currentLanguage);
+
     useEffect(() => {
-        const availableRadioButtons = [];
+        const availableRadioButtons: RadioButtonProps[] = [];
         languages.forEach((language) => {
             availableRadioButtons.push({
                 id: language.code,
                 label: language.name,
                 value: language.code,
-                selected: language.code === currentLanguage
+                selected: language.code === currentLanguage.code,
+                labelStyle: { fontSize: 36 }
             });
         });
+        setRadioButtons(availableRadioButtons);
     }, [languages]);
 
-    const changeLanguage = (language: string) => {
+    const changeLanguage = (id: string) => {
+        const language = languages.find((language) => language.code === id);
+        if (!language) {
+            return;
+        }
         setCurrentLanguage(language);
     };
 
@@ -50,7 +58,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguag
             animationType='fade'
             visible={true}
             onRequestClose={() => {
-                setCurrentLanguage('en');
+                console.log('Modal has been closed.');
             }}
         >
             <View style={styles.container}>
@@ -81,12 +89,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     headerText: {
-        fontSize: 20,
+        fontSize: 36,
         fontWeight: 'bold',
         color: 'black'
     },
     content: {
-        height: 100
+        height: 100,
+        fontSize: 32
     },
     footer: {
         height: 40,

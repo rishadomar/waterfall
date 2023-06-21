@@ -3,6 +3,7 @@ import { CompendiumType } from '../story.types';
 export const compendium: CompendiumType = {
     languages: [
         { name: 'English', code: 'en' },
+        { name: 'Afrikaans', code: 'af' },
         { name: 'Zulu', code: 'zu' }
     ],
     stories: [
@@ -10,7 +11,7 @@ export const compendium: CompendiumType = {
             id: 1,
             titles: [
                 { language: 'en', title: 'Walk to a waterfall' },
-                { language: 'zu', title: 'Ukuphuma emva kwesibani esibukayo' }
+                { language: 'af', title: "Wandel na 'n waterval" }
             ],
             mainImage: require('./pages/pathToTheForest.png'),
             pageTurnerAudio: require('./pages/pageTurner.wav'),
@@ -65,11 +66,11 @@ export const compendium: CompendiumType = {
                             ]
                         },
                         {
-                            language: 'zu',
+                            language: 'af',
                             lines: [
                                 {
-                                    text: 'Sibe sephethe njengoba siya emva kwesibani esibukayo ukuze sikhokhelele iNkosi yamasiko okwethula kwelinye lamathunjwa aseningizimu.',
-                                    audio: require('./pages/1.mp3')
+                                    text: "Ons het 'n uitstappie gemaak om die begin van 'n waterval te vind.",
+                                    audio: require('./pages/1-af.mp3')
                                 }
                             ]
                         }
@@ -92,6 +93,19 @@ export const compendium: CompendiumType = {
                                     audio: require('./pages/2b.mp3')
                                 }
                             ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: "Ons avontuur begin met 'n steil klim op die berg.",
+                                    audio: require('./pages/2a-af.mp3')
+                                },
+                                {
+                                    text: 'Ons neem dit stap vir stap, en maak seker ons rus en haal asem wanneer ons moet.',
+                                    audio: require('./pages/2b-af.mp3')
+                                }
+                            ]
                         }
                     ],
                     image: require('./pages/steps.png'),
@@ -109,6 +123,19 @@ export const compendium: CompendiumType = {
                                 },
                                 {
                                     text: "It's a bit of a challenge, but we help each other over and keep moving forward.",
+                                    audio: require('./pages/3b.mp3')
+                                }
+                            ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: "Terwyl ons die pad opklim, kom ons 'n omgevalle boom teë wat ons moet oorklim.",
+                                    audio: require('./pages/3a.mp3')
+                                },
+                                {
+                                    text: "Dit is 'n bietjie van 'n uitdaging, maar ons help mekaar oor en hou aan beweeg vorentoe.",
                                     audio: require('./pages/3b.mp3')
                                 }
                             ]
@@ -133,6 +160,19 @@ export const compendium: CompendiumType = {
                                     audio: require('./pages/4b.mp3')
                                 }
                             ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: 'Die bos is vol lewe met die soet geluid van singende voëls.',
+                                    audio: require('./pages/4a.mp3')
+                                },
+                                {
+                                    text: 'Ons kan hulle nie sien nie, maar ons weet hulle is daar, weggesteek in die bome.',
+                                    audio: require('./pages/4b.mp3')
+                                }
+                            ]
                         }
                     ],
                     image: require('./pages/beatiful_forest_with_trees_and_some_sunlight_shining.png'),
@@ -154,6 +194,19 @@ export const compendium: CompendiumType = {
                                     audio: require('./pages/5b.mp3')
                                 }
                             ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: 'Die pad is sag en veerkrachtig onder die voet, bezaai met gevalle blare en stokkies.',
+                                    audio: require('./pages/5a.mp3')
+                                },
+                                {
+                                    text: "Hierdie voel asof ons op 'n natuurlike trampolien loop.",
+                                    audio: require('./pages/5b.mp3')
+                                }
+                            ]
                         }
                     ],
                     image: require('./pages/path_is_soft_with_leaves.png'),
@@ -167,6 +220,15 @@ export const compendium: CompendiumType = {
                             language: 'en',
                             lines: [
                                 { text: 'Soon, we reach a bridge that spans a river.', audio: require('./pages/6.mp3') }
+                            ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: "Binnekort bereik ons 'n brug wat oor 'n rivier strek.",
+                                    audio: require('./pages/6.mp3')
+                                }
                             ]
                         }
                     ],
@@ -186,6 +248,19 @@ export const compendium: CompendiumType = {
                                 },
                                 {
                                     text: 'The air is fresh and invigorating, and we take deep, long breaths to fill our lungs.',
+                                    audio: require('./pages/7b.mp3')
+                                }
+                            ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: "Ons maak 'n stop om die verkwikkende koelte van die skaduwee in te neem, terwyl ons luister na die ritselende blare bo ons.",
+                                    audio: require('./pages/7a.mp3')
+                                },
+                                {
+                                    text: 'Die lug is vars en verkwikkend, en ons neem diep, lang asemhale om ons longe te vul.',
                                     audio: require('./pages/7b.mp3')
                                 }
                             ]
@@ -210,6 +285,19 @@ export const compendium: CompendiumType = {
                                     audio: require('./pages/8b.mp3')
                                 }
                             ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: 'Uiteindelik bereik ons ons bestemming: die asemrowende waterval',
+                                    audio: require('./pages/8a.mp3')
+                                },
+                                {
+                                    text: "Die water stroom af en skep 'n pragtige skouspel om waar te neem.",
+                                    audio: require('./pages/8b.mp3')
+                                }
+                            ]
                         }
                     ],
                     image: require('./pages/waterfall.png'),
@@ -227,6 +315,15 @@ export const compendium: CompendiumType = {
                                     audio: require('./pages/9.mp3')
                                 }
                             ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: "Ons neem 'n welverdiende rus om 'n bietjie water te drink en 'n paar vrugte te eet, terwyl ons die natuurlike skoonheid om ons geniet.",
+                                    audio: require('./pages/9.mp3')
+                                }
+                            ]
                         }
                     ],
                     image: require('./pages/waterfall.png'),
@@ -241,6 +338,15 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: 'As we make our way back, we cross the stream by stepping on stones, taking care not to slip.',
+                                    audio: require('./pages/10.mp3')
+                                }
+                            ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: 'Terwyl ons terugkeer, steek ons die stroom oor deur op klippe te stap en sorg dat ons nie gly nie.',
                                     audio: require('./pages/10.mp3')
                                 }
                             ]
@@ -266,6 +372,23 @@ export const compendium: CompendiumType = {
                                 },
                                 {
                                     text: "Our adventure comes to an end as we reach the bottom of the mountain, feeling grateful for the beautiful journey we've experienced together.",
+                                    audio: require('./pages/11c.mp3')
+                                }
+                            ]
+                        },
+                        {
+                            language: 'af',
+                            lines: [
+                                {
+                                    text: 'Ons begin ons afdaling van die berg af, die pad kronkelend terug na onder.',
+                                    audio: require('./pages/11a.mp3')
+                                },
+                                {
+                                    text: 'Ons neem ons tyd en geniet die rustigheid en kalmte van die bos.',
+                                    audio: require('./pages/11b.mp3')
+                                },
+                                {
+                                    text: "Ons avontuur kom tot 'n einde as ons die onderkant van die berg bereik. Ons voel dankbaar vir die pragtige reis wat ons saam beleef het.",
                                     audio: require('./pages/11c.mp3')
                                 }
                             ]

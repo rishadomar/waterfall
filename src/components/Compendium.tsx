@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import Story from './Story';
 import { compendium } from '../../assets/compendium';
 import Pages from './Pages';
 import { LanguageType, StoryType } from '../../story.types';
+import LanguageSelector from './LanguageSelector';
 
 const Compendium: React.FC = () => {
     const [currentStory, setCurrentStory] = useState<number | null>(null);
     const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>(compendium.languages[0]);
+    const [showLanguageSelection, setShowLanguageSelection] = useState<boolean>(false);
 
-    console.log('selected language', selectedLanguage);
+    console.log('selected language', selectedLanguage, showLanguageSelection);
 
     if (currentStory === null) {
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>{selectedLanguage.name}</Text>
+                <Pressable onPress={() => setShowLanguageSelection(true)}>
+                    <Text style={styles.text}>{selectedLanguage.name}</Text>
+                </Pressable>
                 <FlatList
                     style={styles.listView}
                     data={compendium.stories}
@@ -27,16 +31,28 @@ const Compendium: React.FC = () => {
                         />
                     )}
                 />
+                {showLanguageSelection && (
+                    <LanguageSelector
+                        languages={compendium.languages}
+                        currentLanguage={selectedLanguage}
+                        setCurrentLanguage={(newLanguage) => {
+                            setSelectedLanguage(newLanguage);
+                            setShowLanguageSelection(false);
+                        }}
+                    />
+                )}
             </View>
         );
     }
 
     return (
-        <Pages
-            storyId={currentStory}
-            selectedLanguage={selectedLanguage.code}
-            onReturnToIndex={() => setCurrentStory(null)}
-        />
+        <>
+            <Pages
+                storyId={currentStory}
+                selectedLanguage={selectedLanguage.code}
+                onReturnToIndex={() => setCurrentStory(null)}
+            />
+        </>
     );
 };
 
@@ -47,7 +63,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     text: {
-        fontSize: 20,
+        fontSize: 36,
         textAlign: 'center',
         color: 'white'
     },
