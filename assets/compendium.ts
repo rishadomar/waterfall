@@ -3,8 +3,8 @@ import { CompendiumType } from '../story.types';
 export const compendium: CompendiumType = {
     languages: [
         { name: 'English', code: 'en' },
-        { name: 'Afrikaans', code: 'af' },
-        { name: 'Zulu', code: 'zu' }
+        { name: 'Zulu', code: 'zu' },
+        { name: 'Afrikaans', code: 'af' }
     ],
     stories: [
         {
@@ -76,7 +76,7 @@ export const compendium: CompendiumType = {
                         }
                     ],
                     image: require('./pages/pathToTheForest.png'),
-                    tweets: []
+                    tweets: [5]
                 },
                 {
                     pageNumber: 2,

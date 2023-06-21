@@ -11,8 +11,6 @@ const Compendium: React.FC = () => {
     const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>(compendium.languages[0]);
     const [showLanguageSelection, setShowLanguageSelection] = useState<boolean>(false);
 
-    console.log('selected language', selectedLanguage, showLanguageSelection);
-
     if (currentStory === null) {
         return (
             <View style={styles.container}>
@@ -21,7 +19,12 @@ const Compendium: React.FC = () => {
                 </Pressable>
                 <FlatList
                     style={styles.listView}
-                    data={compendium.stories}
+                    data={compendium.stories.reduce((acc: StoryType[], story: StoryType) => {
+                        if (story.titles.findIndex((title) => title.language === selectedLanguage.code) >= 0) {
+                            acc.push(story);
+                        }
+                        return acc;
+                    }, [])}
                     renderItem={({ item }) => (
                         <Story
                             onPress={setCurrentStory}

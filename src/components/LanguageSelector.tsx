@@ -14,21 +14,7 @@ interface LanguageSelectorProps {
 }
 
 const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguage, setCurrentLanguage }) => {
-    // const [currentSelectedLanguage, setCurrentSelectedLanguage] = useState<Language | null>(null);
     const [radioButtons, setRadioButtons] = useState<RadioButtonProps[]>([]);
-
-    // useEffect(() => {
-    //     const findCurrentLanguage = () => {
-    //         const foundCurrentLanguage: Language | undefined = languages.find(
-    //             (language) => language.code === currentLanguage
-    //         );
-    //         if (foundCurrentLanguage) {
-    //             setCurrentSelectedLanguage(foundCurrentLanguage);
-    //         }
-    //     };
-    // }, [languages]);
-
-    console.log('RadioButtons', radioButtons, currentLanguage);
 
     useEffect(() => {
         const availableRadioButtons: RadioButtonProps[] = [];
@@ -75,8 +61,8 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguag
 
 const styles = StyleSheet.create({
     container: {
-        width: 300,
-        height: 200,
+        width: '90%',
+        height: '80%',
         borderRadius: 10,
         backgroundColor: 'white',
         alignItems: 'center',
