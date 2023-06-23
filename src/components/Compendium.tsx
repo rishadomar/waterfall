@@ -42,6 +42,7 @@ const Compendium: React.FC = () => {
                             setSelectedLanguage(newLanguage);
                             setShowLanguageSelection(false);
                         }}
+                        onClose={() => setShowLanguageSelection(false)}
                     />
                 )}
             </View>

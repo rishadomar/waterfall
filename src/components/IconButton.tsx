@@ -1,5 +1,4 @@
-import { Pressable, StyleSheet, Text, Dimensions } from 'react-native';
-//import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PropsWithChildren } from 'react';
 
@@ -32,10 +31,12 @@ const styles = StyleSheet.create({
     },
     iconButton: {
         justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: 'black',
         marginVertical: 10,
-        borderRadius: 50
+        borderRadius: 50,
+        position: 'absolute',
+        top: 20,
+        right: 20
     },
     iconButtonLabel: {
         color: '#fff',

@@ -1,6 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Modal, Button } from 'react-native';
+import { View, Text, StyleSheet, Modal, Dimensions } from 'react-native';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import IconButton from './IconButton';
+
+// We need to get the height of the phone and use it relatively,
+// This is because height of phones vary
+const windowHeight = Dimensions.get('window').height;
 
 interface Language {
     name: string;
@@ -11,9 +16,10 @@ interface LanguageSelectorProps {
     languages: Language[];
     currentLanguage: Language;
     setCurrentLanguage: (language: Language) => void;
+    onClose: () => void;
 }
 
-const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguage, setCurrentLanguage }) => {
+const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguage, setCurrentLanguage, onClose }) => {
     const [radioButtons, setRadioButtons] = useState<RadioButtonProps[]>([]);
 
     useEffect(() => {
@@ -39,18 +45,9 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguag
     };
 
     return (
-        <Modal
-            transparent={true}
-            animationType='fade'
-            visible={true}
-            onRequestClose={() => {
-                console.log('Modal has been closed.');
-            }}
-        >
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.headerText}>Select Language</Text>
-                </View>
+        <Modal transparent={true} animationType='fade' visible={true} onRequestClose={onClose}>
+            <View style={[styles.bottomSheet, { height: windowHeight * 0.3 }]}>
+                <IconButton onPress={onClose} icon={'close'} color='white' />
                 <View style={styles.content}>
                     <RadioGroup radioButtons={radioButtons} onPress={changeLanguage} />
                 </View>
@@ -60,41 +57,23 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ languages, currentLanguag
 };
 
 const styles = StyleSheet.create({
-    container: {
-        width: '90%',
-        height: '80%',
-        borderRadius: 10,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    header: {
-        height: 40,
-        backgroundColor: 'lightgray',
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1
-    },
-    headerText: {
-        fontSize: 36,
-        fontWeight: 'bold',
-        color: 'black'
+    bottomSheet: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        justifyContent: 'flex-start',
+        borderRadius: 18,
+        backgroundColor: '#aaf0c9',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        paddingVertical: 23,
+        paddingHorizontal: 25,
+        bottom: 0,
+        borderWidth: 1
     },
     content: {
         height: 100,
-        fontSize: 32
-    },
-    footer: {
-        height: 40,
-        backgroundColor: 'lightgray'
-    },
-    button: {
-        width: 100,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: 'blue',
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold'
+        fontSize: 36
     }
 });
 
