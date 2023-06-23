@@ -50,6 +50,11 @@ export const compendium: CompendiumType = {
                     id: 8,
                     audio: require('./availableTweets/forest-birds.wav'),
                     image: require('./availableTweets/waterfall.png')
+                },
+                {
+                    id: 9,
+                    audio: require('./availableTweets/birds-singing-in-the-trees.wav'),
+                    image: require('./availableTweets/robin.jpg')
                 }
             ],
             pages: [
@@ -76,7 +81,7 @@ export const compendium: CompendiumType = {
                         }
                     ],
                     image: require('./pages/pathToTheForest.png'),
-                    tweets: [5]
+                    tweets: [9]
                 },
                 {
                     pageNumber: 2,
@@ -109,7 +114,7 @@ export const compendium: CompendiumType = {
                         }
                     ],
                     image: require('./pages/steps.png'),
-                    tweets: [1]
+                    tweets: [9]
                 },
                 {
                     pageNumber: 3,
@@ -142,7 +147,7 @@ export const compendium: CompendiumType = {
                         }
                     ],
                     image: require('./pages/A_forest_path_with_a_fallen_tree_across_the_path.png'),
-                    tweets: [3]
+                    tweets: [9]
                     // A forest path with a fallen tree across the path Canon EF 50mm f/1.8 STM lens, hyperrealistic --ar 4:5 --seed 786
                 },
                 {

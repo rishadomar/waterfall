@@ -72,9 +72,7 @@ const Page: React.FunctionComponent<PageProps> = ({
                             selectedLanguage={selectedLanguage}
                             onTextIsDone={() => setAudioComplete(true)}
                         />
-                        {page.tweets.length > 0 && (
-                            <PlayTweet availableTweets={availableTweets} tweetId={page.tweets[0]} />
-                        )}
+                        {page.tweets.length > 0 && <PlayTweet availableTweets={availableTweets} page={page} />}
                     </ImageBackground>
                 </Animated.View>
             </PanGestureHandler>
