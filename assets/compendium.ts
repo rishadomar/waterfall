@@ -81,7 +81,7 @@ export const compendium: CompendiumType = {
                         }
                     ],
                     image: require('./pages/pathToTheForest.png'),
-                    tweets: [9]
+                    tweets: []
                 },
                 {
                     pageNumber: 2,
@@ -137,17 +137,17 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: "Terwyl ons die pad opklim, kom ons 'n omgevalle boom teë wat ons moet oorklim.",
-                                    audio: require('./pages/3a.mp3')
+                                    audio: require('./pages/3a-af.mp3')
                                 },
                                 {
                                     text: "Dit is 'n bietjie van 'n uitdaging, maar ons help mekaar oor en hou aan beweeg vorentoe.",
-                                    audio: require('./pages/3b.mp3')
+                                    audio: require('./pages/3b-af.mp3')
                                 }
                             ]
                         }
                     ],
                     image: require('./pages/A_forest_path_with_a_fallen_tree_across_the_path.png'),
-                    tweets: [9]
+                    tweets: []
                     // A forest path with a fallen tree across the path Canon EF 50mm f/1.8 STM lens, hyperrealistic --ar 4:5 --seed 786
                 },
                 {
@@ -171,11 +171,11 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: 'Die bos is vol lewe met die soet geluid van singende voëls.',
-                                    audio: require('./pages/4a.mp3')
+                                    audio: require('./pages/4a-af.mp3')
                                 },
                                 {
                                     text: 'Ons kan hulle nie sien nie, maar ons weet hulle is daar, weggesteek in die bome.',
-                                    audio: require('./pages/4b.mp3')
+                                    audio: require('./pages/4b-af.mp3')
                                 }
                             ]
                         }
@@ -205,17 +205,17 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: 'Die pad is sag en veerkrachtig onder die voet, bezaai met gevalle blare en stokkies.',
-                                    audio: require('./pages/5a.mp3')
+                                    audio: require('./pages/5a-af.mp3')
                                 },
                                 {
                                     text: "Hierdie voel asof ons op 'n natuurlike trampolien loop.",
-                                    audio: require('./pages/5b.mp3')
+                                    audio: require('./pages/5b-af.mp3')
                                 }
                             ]
                         }
                     ],
                     image: require('./pages/path_is_soft_with_leaves.png'),
-                    tweets: [2]
+                    tweets: []
                     // path in a forest. slightly uphill. the path is soft with leaves and bark :: Canon EF 50mm f/1.8 STM lens, hyperrealistic --ar 4:5 --seed 786
                 },
                 {
@@ -232,7 +232,7 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: "Binnekort bereik ons 'n brug wat oor 'n rivier strek.",
-                                    audio: require('./pages/6.mp3')
+                                    audio: require('./pages/6-af.mp3')
                                 }
                             ]
                         }
@@ -262,11 +262,11 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: "Ons maak 'n stop om die verkwikkende koelte van die skaduwee in te neem, terwyl ons luister na die ritselende blare bo ons.",
-                                    audio: require('./pages/7a.mp3')
+                                    audio: require('./pages/7a-af.mp3')
                                 },
                                 {
                                     text: 'Die lug is vars en verkwikkend, en ons neem diep, lang asemhale om ons longe te vul.',
-                                    audio: require('./pages/7b.mp3')
+                                    audio: require('./pages/7b-af.mp3')
                                 }
                             ]
                         }
@@ -296,11 +296,11 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: 'Uiteindelik bereik ons ons bestemming: die asemrowende waterval',
-                                    audio: require('./pages/8a.mp3')
+                                    audio: require('./pages/8a-af.mp3')
                                 },
                                 {
                                     text: "Die water stroom af en skep 'n pragtige skouspel om waar te neem.",
-                                    audio: require('./pages/8b.mp3')
+                                    audio: require('./pages/8b-af.mp3')
                                 }
                             ]
                         }
@@ -326,7 +326,7 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: "Ons neem 'n welverdiende rus om 'n bietjie water te drink en 'n paar vrugte te eet, terwyl ons die natuurlike skoonheid om ons geniet.",
-                                    audio: require('./pages/9.mp3')
+                                    audio: require('./pages/9-af.mp3')
                                 }
                             ]
                         }
@@ -352,7 +352,7 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: 'Terwyl ons terugkeer, steek ons die stroom oor deur op klippe te stap en sorg dat ons nie gly nie.',
-                                    audio: require('./pages/10.mp3')
+                                    audio: require('./pages/10-af.mp3')
                                 }
                             ]
                         }
@@ -386,15 +386,15 @@ export const compendium: CompendiumType = {
                             lines: [
                                 {
                                     text: 'Ons begin ons afdaling van die berg af, die pad kronkelend terug na onder.',
-                                    audio: require('./pages/11a.mp3')
+                                    audio: require('./pages/11a-af.mp3')
                                 },
                                 {
                                     text: 'Ons neem ons tyd en geniet die rustigheid en kalmte van die bos.',
-                                    audio: require('./pages/11b.mp3')
+                                    audio: require('./pages/11b-af.mp3')
                                 },
                                 {
                                     text: "Ons avontuur kom tot 'n einde as ons die onderkant van die berg bereik. Ons voel dankbaar vir die pragtige reis wat ons saam beleef het.",
-                                    audio: require('./pages/11c.mp3')
+                                    audio: require('./pages/11c-af.mp3')
                                 }
                             ]
                         }
