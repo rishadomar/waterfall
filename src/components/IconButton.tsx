@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PropsWithChildren } from 'react';
 
@@ -11,24 +11,16 @@ interface IconButtonProps extends PropsWithChildren<any> {
 
 const IconButton: React.FunctionComponent<IconButtonProps> = ({ icon, label, onPress, size = 80 }) => {
     return (
-        <Pressable style={[styles.iconButton, { height: size, width: size }]} onPress={onPress}>
+        <TouchableOpacity style={[styles.iconButton, { height: size, width: size }]} onPress={onPress}>
             <MaterialCommunityIcons name={icon} size={size} color='white' />
             {label && <Text style={styles.iconButtonLabel}>{label}</Text>}
-        </Pressable>
+        </TouchableOpacity>
     );
 };
 
 export default IconButton;
 
 const styles = StyleSheet.create({
-    circle: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        backgroundColor: 'black',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
     iconButton: {
         justifyContent: 'center',
         backgroundColor: 'black',

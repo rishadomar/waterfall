@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { StoryType } from '../../story.types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -8,6 +8,9 @@ type StoryProps = {
     onPress: (storyId: number) => void;
     selectedLanguage: string;
 };
+
+const windowHeight = Dimensions.get('window').height;
+const cardHeight = windowHeight * 0.3;
 
 const Story: React.FunctionComponent<StoryProps> = ({ story, onPress, selectedLanguage }) => {
     const [storyTitle, setStoryTitle] = useState<string>('');
@@ -34,26 +37,21 @@ const Story: React.FunctionComponent<StoryProps> = ({ story, onPress, selectedLa
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        margin: 20,
         overflow: 'hidden',
-        height: 400,
-        padding: 10,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1
+        height: cardHeight
     },
     image: {
-        flex: 1,
         borderWidth: 1,
         borderRadius: 18,
-        marginBottom: 10
+        margin: 20,
+        justifyContent: 'center'
     },
     text: {
         position: 'absolute',
-        bottom: 40,
-        left: 40,
+        bottom: cardHeight - cardHeight * 0.98,
+        left: 20,
         color: 'white',
-        fontSize: 34,
+        fontSize: cardHeight * 0.15,
         fontWeight: 'bold',
         margin: 10
     }

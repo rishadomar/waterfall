@@ -18,7 +18,6 @@ const Compendium: React.FC = () => {
                     <Text style={styles.text}>{selectedLanguage.name}</Text>
                 </Pressable>
                 <FlatList
-                    style={styles.listView}
                     data={compendium.stories.reduce((acc: StoryType[], story: StoryType) => {
                         if (story.titles.findIndex((title) => title.language === selectedLanguage.code) >= 0) {
                             acc.push(story);
@@ -69,13 +68,6 @@ const styles = StyleSheet.create({
         fontSize: 36,
         textAlign: 'center',
         color: 'white'
-    },
-    listView: {},
-    title: {
-        fontSize: 16
-    },
-    content: {
-        fontSize: 14
     }
 });
 
