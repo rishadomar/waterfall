@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { StoryType } from '../../story.types';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type StoryProps = {
     story: StoryType;
@@ -22,12 +23,11 @@ const Story: React.FunctionComponent<StoryProps> = ({ story, onPress, selectedLa
     }, [selectedLanguage]);
 
     return (
-        <View style={styles.container}>
-            <Pressable onPress={() => onPress(story.id)}>
-                <ImageBackground source={story.mainImage} resizeMode='cover' imageStyle={styles.image}>
-                    <Text style={styles.text}>{storyTitle}</Text>
-                </ImageBackground>
-            </Pressable>
+        <View>
+            <TouchableOpacity style={styles.container} onPress={() => onPress(story.id)}>
+                <Image source={story.mainImage} resizeMode='cover' style={styles.image} />
+            </TouchableOpacity>
+            <Text style={styles.text}>{storyTitle}</Text>
         </View>
     );
 };
@@ -37,16 +37,21 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 20,
         overflow: 'hidden',
-        justifyContent: 'space-evenly'
+        height: 400,
+        padding: 10,
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1
     },
     image: {
         flex: 1,
-        justifyContent: 'center',
-        width: '100%',
-        borderRadius: 18
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 10
     },
     text: {
-        textAlign: 'center',
+        position: 'absolute',
+        bottom: 40,
+        left: 40,
         color: 'white',
         fontSize: 34,
         fontWeight: 'bold',

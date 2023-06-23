@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable, StatusBar } from 'react-native';
 import Story from './Story';
 import { compendium } from '../../assets/compendium';
 import Pages from './Pages';
@@ -62,23 +62,14 @@ const Compendium: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 80,
-        justifyContent: 'space-around'
+        marginTop: StatusBar.currentHeight || 0
     },
     text: {
         fontSize: 36,
         textAlign: 'center',
         color: 'white'
     },
-    listView: {
-        flex: 1
-    },
-    row: {
-        height: 600,
-        padding: 10,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1
-    },
+    listView: {},
     title: {
         fontSize: 16
     },
